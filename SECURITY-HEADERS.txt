@@ -1,0 +1,17 @@
+HEADERS RECOMENDADOS PARA O HOSTING DE PRODUÇÃO
+
+Importante: estes headers precisam ser configurados no provedor de hospedagem/CDN; um arquivo HTML sozinho não consegue aplicá-los.
+
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+X-Frame-Options: DENY
+
+Content-Security-Policy sugerida para a arquitetura atual:
+default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+Observações:
+- style-src ainda precisa de 'unsafe-inline' porque painel/admin possuem CSS e amostras de tema inline.
+- Se o hosting já envia headers equivalentes, não duplique sem revisar.
+- Teste login, painel, uploads e catálogo depois de ativar CSP.

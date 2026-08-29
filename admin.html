@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Loja | Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #080808;
+      --surface: #111;
+      --gold: #d6ae55;
+      --text: #f4f0e8;
+      --muted: #a6a19a;
+      --line: #292722;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #080808;
+      color: var(--text);
+      font-family: "Montserrat", sans-serif;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: min(100%, 420px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 40px 28px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .login-logo {
+      display: block;
+      width: min(180px, 55vw);
+      max-height: 110px;
+      object-fit: contain;
+      margin: 0 auto 18px;
+    }
+
+    .login-logo[hidden] {
+      display: none;
+    }
+
+    .logo h1 {
+      font-family: "Cormorant Garamond", serif;
+      color: var(--gold);
+      font-size: 32px;
+    }
+
+    .logo p {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      background: #0c0c0c;
+      border: 1px solid var(--line);
+      color: white;
+      padding: 0 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--gold);
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: #080808;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    #message {
+      min-height: 20px;
+      margin-top: 18px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+  
+
+    /* V3.1 — legibilidade */
+    .logo p { font-size: 10.5px; }
+    label { font-size: 11px; }
+    #message { font-size: 12px; }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="login-card">
+
+    <div class="logo">
+      <img
+        class="login-logo"
+        id="loginStoreLogo"
+        alt="Logo da loja"
+        hidden
+      >
+      <h1 id="loginStoreName">MINHA LOJA</h1>
+      <p>ADMINISTRATIVO</p>
+    </div>
+
+    <form id="loginForm">
+
+      <div class="field">
+        <label for="email">E-MAIL</label>
+        <input
+          type="email"
+          id="email"
+          required
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">SENHA</label>
+        <input
+          type="password"
+          id="password"
+          required
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button type="submit">
+        ENTRAR
+      </button>
+
+      <p id="message"></p>
+
+    </form>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+
+</body>
+</html>

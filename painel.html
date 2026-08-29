@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Painel Administrativo</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <style>
+
+    /* ==================================================
+       RESET
+       ================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    /* ==================================================
+       TEMA PADRÃO
+       ================================================== */
+
+    :root {
+
+      --bg: #080808;
+
+      --surface: #111111;
+
+      --surface2: #171717;
+
+      --input: #0c0c0c;
+
+      --preview-bg: #0a0a0a;
+
+      --gold: #d6ae55;
+
+      --gold-light: #f1d78d;
+
+      --text: #f4f0e8;
+
+      --muted: #a6a19a;
+
+      --line: #292722;
+
+      --button-text: #080808;
+
+      --header-bg: rgba(8, 8, 8, 0.95);
+
+      --shadow: rgba(0, 0, 0, 0.4);
+
+      --green: #78c99b;
+
+      --red: #e38b8b;
+
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+
+      min-height: 100vh;
+
+      background:
+        var(--bg);
+
+      color:
+        var(--text);
+
+      font-family:
+        "Montserrat",
+        sans-serif;
+
+      transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+    }
+
+
+    button,
+    input,
+    select,
+    textarea {
+
+      font:
+        inherit;
+
+    }
+
+
+    button {
+      cursor: pointer;
+    }
+
+
+    /* ==================================================
+       HEADER
+       ================================================== */
+
+    .header {
+
+      min-height:
+        72px;
+
+      padding:
+        16px 20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        50;
+
+      background:
+        var(--header-bg);
+
+      border-bottom:
+        1px solid var(--line);
+
+      backdrop-filter:
+        blur(12px);
+
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+
+    }
+
+
+    .brand h1 {
+
+      color:
+        var(--gold);
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size:
+        25px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .brand p {
+
+      margin-top:
+        3px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        8px;
+
+      letter-spacing:
+        2px;
+
+    }
+
+
+    .logout {
+
+      padding:
+        10px 14px;
+
+      background:
+        transparent;
+
+      border:
+        1px solid var(--line);
+
+      color:
+        var(--muted);
+
+      font-size:
+        9px;
+
+      letter-spacing:
+        1px;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .logout:hover {
+
+      border-color:
+        var(--gold);
+
+      color:
+        var(--gold);
+
+    }
+
+
+    /* ==================================================
+       CONTAINER
+       ================================================== */
+
+    .container {
+
+      width:
+        min(100% - 32px, 1000px);
+
+      margin:
+        auto;
+
+      padding:
+        45px 0 80px;
+
+    }
+
+
+    .section-heading {
+
+      margin-bottom:
+        26px;
+
+    }
+
+
+    .section-heading > p {
+
+      color:
+        var(--gold);
+
+      font-size:
+        9px;
+
+      font-weight:
+        600;
+
+      letter-spacing:
+        2px;
+
+    }
+
+
+    .section-heading h2 {
+
+      margin:
+        4px 0 7px;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size:
+        43px;
+
+      font-weight:
+        500;
+
+    }
+
+
+    .section-heading span {
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+    }
+
+
+    /* ==================================================
+       NOVO PRODUTO
+       ================================================== */
+
+    .new-product {
+
+      width:
+        100%;
+
+      min-height:
+        50px;
+
+      margin-bottom:
+        18px;
+
+      background:
+        var(--gold);
+
+      border:
+        1px solid var(--gold);
+
+      color:
+        var(--button-text);
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1.4px;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .new-product:hover {
+
+      background:
+        var(--gold-light);
+
+      border-color:
+        var(--gold-light);
+
+    }
+
+
+    /* ==================================================
+       BUSCA E FILTRO
+       ================================================== */
+
+    .admin-filters {
+
+      display:
+        grid;
+
+      gap:
+        10px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .admin-filters input,
+    .admin-filters select {
+
+      width:
+        100%;
+
+      min-height:
+        44px;
+
+      padding:
+        0 12px;
+
+      background:
+        var(--input);
+
+      border:
+        1px solid var(--line);
+
+      color:
+        var(--text);
+
+      outline:
+        none;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .admin-filters input::placeholder {
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .admin-filters input:focus,
+    .admin-filters select:focus {
+
+      border-color:
+        var(--gold);
+
+    }
+
+
+    /* ==================================================
+       PRODUTOS
+       ================================================== */
+
+    .products {
+
+      display:
+        grid;
+
+      gap:
+        12px;
+
+    }
+
+
+    .product {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        70px minmax(0, 1fr);
+
+      gap:
+        14px;
+
+      padding:
+        12px;
+
+      background:
+        var(--surface);
+
+      border:
+        1px solid var(--line);
+
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+
+    }
+
+
+    .product > img {
+
+      width:
+        70px;
+
+      height:
+        82px;
+
+      object-fit:
+        cover;
+
+      background:
+        var(--surface2);
+
+      border:
+        1px solid var(--line);
+
+    }
+
+
+    .product-main {
+      min-width: 0;
+    }
+
+
+    .product-name {
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size:
+        23px;
+
+      line-height:
+        1;
+
+    }
+
+
+    .product-price {
+
+      margin-top:
+        5px;
+
+      color:
+        var(--gold);
+
+      font-size:
+        12px;
+
+      font-weight:
+        600;
+
+    }
+
+
+    .product-category {
+
+      margin-top:
+        5px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        9px;
+
+      text-transform:
+        capitalize;
+
+    }
+
+
+    .status {
+
+      display:
+        inline-block;
+
+      margin-top:
+        9px;
+
+      font-size:
+        8px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
+    .status.active {
+      color: var(--green);
+    }
+
+
+    .status.hidden {
+      color: var(--red);
+    }
+
+
+    .product-buttons {
+
+      grid-column:
+        1 / -1;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        8px;
+
+    }
+
+
+    .product-buttons button {
+
+      flex:
+        1;
+
+      min-width:
+        90px;
+
+      min-height:
+        38px;
+
+      background:
+        var(--input);
+
+      border:
+        1px solid var(--line);
+
+      color:
+        var(--text);
+
+      font-size:
+        9px;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
+    .product-buttons .edit {
+
+      border-color:
+        var(--gold);
+
+      color:
+        var(--gold);
+
+    }
+
+
+    .product-buttons .delete {
+
+      border-color:
+        var(--red);
+
+      color:
+        var(--red);
+
+    }
+
+
+    /* ==================================================
+       ESTADOS
+       ================================================== */
+
+    .empty,
+    .loading {
+
+      padding:
+        35px;
+
+      color:
+        var(--muted);
+
+      border:
+        1px dashed var(--line);
+
+      text-align:
+        center;
+
+      font-size:
+        12px;
+
+    }
+
+
+    /* ==================================================
+       CONFIGURAÇÕES
+       ================================================== */
+
+    .store-settings {
+
+      margin-top:
+        75px;
+
+      padding-top:
+        42px;
+
+      border-top:
+        1px solid var(--line);
+
+    }
+
+
+    .settings-block {
+
+      margin-bottom:
+        18px;
+
+      padding:
+        20px;
+
+      background:
+        var(--surface);
+
+      border:
+        1px solid var(--line);
+
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+
+    }
+
+
+    .settings-block h3 {
+
+      color:
+        var(--gold);
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size:
+        28px;
+
+      font-weight:
+        500;
+
+    }
+
+
+    .settings-block > p {
+
+      margin:
+        5px 0 18px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        10px;
+
+      line-height:
+        1.6;
+
+    }
+
+
+    #settingsForm label,
+    .edit-card label {
+
+      display:
+        block;
+
+      margin:
+        15px 0 6px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        9px;
+
+      letter-spacing:
+        1px;
+
+    }
+
+
+    #settingsForm input,
+    #settingsForm textarea,
+    #settingsForm select,
+    .edit-card input,
+    .edit-card textarea,
+    .edit-card select {
+
+      width:
+        100%;
+
+      padding:
+        12px;
+
+      background:
+        var(--input);
+
+      border:
+        1px solid var(--line);
+
+      color:
+        var(--text);
+
+      outline:
+        none;
+
+      transition:
+        background 0.3s ease,
+        border-color 0.2s ease,
+        color 0.3s ease;
+
+    }
+
+
+    #settingsForm textarea,
+    .edit-card textarea {
+
+      min-height:
+        100px;
+
+      resize:
+        vertical;
+
+    }
+
+
+    #settingsForm input::placeholder,
+    #settingsForm textarea::placeholder,
+    .edit-card input::placeholder,
+    .edit-card textarea::placeholder {
+
+      color:
+        var(--muted);
+
+    }
+
+
+    #settingsForm input:focus,
+    #settingsForm textarea:focus,
+    #settingsForm select:focus,
+    .edit-card input:focus,
+    .edit-card textarea:focus,
+    .edit-card select:focus {
+
+      border-color:
+        var(--gold);
+
+    }
+
+
+    /* ==================================================
+       LOGO
+       ================================================== */
+
+    .logo-preview-wrap {
+
+      min-height:
+        120px;
+
+      margin-top:
+        12px;
+
+      padding:
+        18px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        var(--preview-bg);
+
+      border:
+        1px solid var(--line);
+
+    }
+
+
+    #settingsLogoPreview {
+
+      display:
+        none;
+
+      max-width:
+        220px;
+
+      max-height:
+        160px;
+
+      object-fit:
+        contain;
+
+    }
+
+
+    .help {
+
+      margin-top:
+        8px !important;
+
+      color:
+        var(--muted);
+
+      font-size:
+        9px !important;
+
+    }
+
+
+    /* ==================================================
+       TEMAS
+       ================================================== */
+
+    .theme-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap:
+        10px;
+
+    }
+
+
+    .theme-card {
+
+      padding:
+        10px;
+
+      background:
+        var(--input);
+
+      border:
+        1px solid var(--line);
+
+      color:
+        var(--text);
+
+      text-align:
+        left;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .theme-card:hover {
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .theme-card.selected {
+
+      border-color:
+        var(--gold);
+
+      box-shadow:
+        0 0 0 1px var(--gold);
+
+    }
+
+
+    .theme-preview {
+
+      height:
+        63px;
+
+      margin-bottom:
+        9px;
+
+      padding:
+        8px;
+
+      display:
+        flex;
+
+      align-items:
+        flex-end;
+
+      border:
+        1px solid rgba(127, 127, 127, 0.25);
+
+    }
+
+
+    .theme-dot {
+
+      width:
+        17px;
+
+      height:
+        17px;
+
+      margin-right:
+        5px;
+
+      border-radius:
+        50%;
+
+      border:
+        1px solid rgba(127, 127, 127, 0.3);
+
+    }
+
+
+    .theme-name {
+
+      display:
+        block;
+
+      color:
+        var(--text);
+
+      font-size:
+        9px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        0.4px;
+
+    }
+
+
+    .theme-type {
+
+      display:
+        block;
+
+      margin-top:
+        3px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        8px;
+
+    }
+
+
+    .noir-preview {
+      background: linear-gradient(135deg, #080808, #211b10);
+    }
+
+    .oud-preview {
+      background: linear-gradient(135deg, #100c09, #3a291b);
+    }
+
+    .burgundy-preview {
+      background: linear-gradient(135deg, #12070a, #491725);
+    }
+
+    .emerald-preview {
+      background: linear-gradient(135deg, #06100d, #15382e);
+    }
+
+    .ivory-preview {
+      background: linear-gradient(135deg, #f6f1e8, #dfcfab);
+    }
+
+    .pearl-preview {
+      background: linear-gradient(135deg, #f7efea, #d8bdb1);
+    }
+
+    .minimal-preview {
+      background: linear-gradient(135deg, #fafafa, #dedede);
+    }
+
+    .sand-preview {
+      background: linear-gradient(135deg, #eee2ce, #bca17a);
+    }
+
+    .rose-preview {
+      background: linear-gradient(135deg, #f3e7e2, #c79587);
+    }
+
+    .ice-preview {
+      background: linear-gradient(135deg, #f3f6f7, #bac4c9);
+    }
+
+
+    /* ==================================================
+       BOTÕES DE SALVAR
+       ================================================== */
+
+    .save-settings,
+    .save-edit {
+
+      width:
+        100%;
+
+      min-height:
+        50px;
+
+      margin-top:
+        10px;
+
+      background:
+        var(--gold);
+
+      border:
+        1px solid var(--gold);
+
+      color:
+        var(--button-text);
+
+      font-size:
+        10px;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        1.3px;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .save-settings:hover,
+    .save-edit:hover {
+
+      background:
+        var(--gold-light);
+
+      border-color:
+        var(--gold-light);
+
+    }
+
+
+    #settingsMessage,
+    #editMessage {
+
+      min-height:
+        18px;
+
+      margin-top:
+        12px;
+
+      color:
+        var(--muted);
+
+      text-align:
+        center;
+
+      font-size:
+        11px;
+
+    }
+
+
+    /* ==================================================
+       MODAL
+       ================================================== */
+
+    .edit-modal {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        100;
+
+    }
+
+
+    .edit-modal[hidden] {
+      display: none;
+    }
+
+
+    .edit-backdrop {
+
+      position:
+        absolute;
+
+      inset:
+        0;
+
+      background:
+        rgba(0, 0, 0, 0.72);
+
+      backdrop-filter:
+        blur(5px);
+
+    }
+
+
+    .edit-card {
+
+      position:
+        relative;
+
+      z-index:
+        2;
+
+      width:
+        min(92%, 520px);
+
+      max-height:
+        90vh;
+
+      margin:
+        5vh auto;
+
+      padding:
+        28px 22px;
+
+      overflow-y:
+        auto;
+
+      background:
+        var(--surface);
+
+      border:
+        1px solid var(--line);
+
+      box-shadow:
+        0 25px 70px var(--shadow);
+
+    }
+
+
+    .edit-card h2 {
+
+      margin-bottom:
+        20px;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
+
+      font-size:
+        36px;
+
+      font-weight:
+        500;
+
+    }
+
+
+    .edit-close {
+
+      position:
+        absolute;
+
+      right:
+        12px;
+
+      top:
+        8px;
+
+      background:
+        transparent;
+
+      border:
+        0;
+
+      color:
+        var(--text);
+
+      font-size:
+        30px;
+
+    }
+
+
+    #imagePreview {
+
+      display:
+        none;
+
+      width:
+        100%;
+
+      max-height:
+        240px;
+
+      margin-top:
+        12px;
+
+      object-fit:
+        contain;
+
+      background:
+        var(--preview-bg);
+
+      border:
+        1px solid var(--line);
+
+    }
+
+
+    .check-row {
+
+      display:
+        flex !important;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+    }
+
+
+    .check-row input {
+      width: auto;
+    }
+
+
+    /* ==================================================
+       DESKTOP
+       ================================================== */
+
+    @media (min-width: 700px) {
+
+      .admin-filters {
+
+        grid-template-columns:
+          1fr 220px;
+
+      }
+
+
+      .product {
+
+        grid-template-columns:
+          85px minmax(0, 1fr) auto;
+
+        align-items:
+          center;
+
+      }
+
+
+      .product > img {
+
+        width:
+          85px;
+
+        height:
+          100px;
+
+      }
+
+
+      .product-buttons {
+
+        grid-column:
+          auto;
+
+        min-width:
+          290px;
+
+      }
+
+
+      .settings-grid-2 {
+
+        display:
+          grid;
+
+        grid-template-columns:
+          1fr 1fr;
+
+        gap:
+          15px;
+
+      }
+
+
+      .theme-grid {
+
+        grid-template-columns:
+          repeat(5, 1fr);
+
+      }
+
+    }
+
+  
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+    .product > img.image-missing {
+      object-fit: contain;
+      background: var(--surface2);
+    }
+  
+
+    /* ==================================================
+       V3.1 — LEGIBILIDADE DO PAINEL
+       ================================================== */
+
+    .brand h1 { font-size: 27px; }
+    .brand p { font-size: 10px; }
+    .logout { font-size: 10px; }
+    .section-heading > p { font-size: 10.5px; }
+    .section-heading span { font-size: 13px; }
+    .new-product { font-size: 11.5px; }
+    .product-price { font-size: 13px; }
+    .product-category { font-size: 10px; }
+    .status { font-size: 9.5px; }
+    .product-buttons button { font-size: 10px; }
+    .settings-block > p { font-size: 11.5px; }
+    #settingsForm label,
+    .edit-card label { font-size: 10.5px; }
+    .help { font-size: 10.5px !important; }
+    .theme-name { font-size: 10px; }
+    .theme-type { font-size: 9.5px; }
+    .save-settings,
+    .save-edit { font-size: 11px; }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ==================================================
+       HEADER
+       ================================================== -->
+
+  <header class="header">
+
+    <div class="brand">
+
+      <h1 id="panelStoreName">
+        MINHA LOJA
+      </h1>
+
+      <p>
+        PAINEL ADMINISTRATIVO
+      </p>
+
+    </div>
+
+
+    <button
+      class="logout"
+      id="logoutButton"
+    >
+      SAIR
+    </button>
+
+  </header>
+
+
+
+  <main class="container">
+
+
+    <!-- ==================================================
+         PRODUTOS
+         ================================================== -->
+
+    <section class="section-heading">
+
+      <p>
+        ADMINISTRAÇÃO
+      </p>
+
+      <h2>
+        Produtos
+      </h2>
+
+      <span id="productCount">
+        Carregando catálogo...
+      </span>
+
+    </section>
+
+
+    <button
+      class="new-product"
+      id="newProductButton"
+    >
+      + NOVO PRODUTO
+    </button>
+
+
+    <div class="admin-filters">
+
+      <input
+        type="search"
+        id="adminSearch"
+        placeholder="Buscar produto..."
+        autocomplete="off"
+      >
+
+
+      <select id="adminCategoryFilter">
+        <option value="todos">Todas as categorias</option>
+      </select>
+
+    </div>
+
+
+    <section
+      class="products"
+      id="adminProducts"
+    >
+
+      <p class="loading">
+        Carregando produtos...
+      </p>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         CONFIGURAÇÕES
+         ================================================== -->
+
+    <section class="store-settings">
+
+
+      <div class="section-heading">
+
+        <p>
+          CONFIGURAÇÕES
+        </p>
+
+        <h2>
+          Loja
+        </h2>
+
+        <span>
+          Personalize conteúdo e aparência do site.
+        </span>
+
+      </div>
+
+
+      <form id="settingsForm">
+
+
+        <!-- IDENTIDADE -->
+
+        <div class="settings-block">
+
+          <h3>
+            Identidade
+          </h3>
+
+          <p>
+            Nome e logo principal da loja.
+          </p>
+
+
+          <label for="settingsNome">
+            NOME DA LOJA
+          </label>
+
+          <input
+            id="settingsNome"
+            type="text"
+            required
+          >
+
+
+          <label for="settingsLogoFile">
+            LOGO
+          </label>
+
+          <input
+            id="settingsLogoFile"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+          >
+
+
+          <input
+            id="settingsLogoUrl"
+            type="hidden"
+          >
+
+
+          <div class="logo-preview-wrap">
+
+            <img
+              id="settingsLogoPreview"
+              alt="Prévia da logo"
+            >
+
+          </div>
+
+
+          <p class="help">
+            Essa será a logo principal utilizada no site. Imagens de até 8 MB são aceitas e comprimidas automaticamente.
+          </p>
+
+        </div>
+
+
+
+        <!-- APARÊNCIA -->
+
+        <div class="settings-block">
+
+          <h3>
+            Aparência
+          </h3>
+
+          <p>
+            Clique em um tema para visualizar.
+            O painel também muda imediatamente.
+          </p>
+
+
+          <input
+            type="hidden"
+            id="settingsTema"
+            value="noir_gold"
+          >
+
+
+          <div class="theme-grid">
+
+
+            <!-- NOIR GOLD -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="noir_gold"
+            >
+
+              <div class="theme-preview noir-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#080808"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#d6ae55"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#f4f0e8"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Noir Gold
+              </span>
+
+              <span class="theme-type">
+                Escuro
+              </span>
+
+            </button>
+
+
+
+            <!-- OUD -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="oud_bronze"
+            >
+
+              <div class="theme-preview oud-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#100c09"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#b98245"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#f4ede4"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Oud Bronze
+              </span>
+
+              <span class="theme-type">
+                Escuro
+              </span>
+
+            </button>
+
+
+
+            <!-- BURGUNDY -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="royal_burgundy"
+            >
+
+              <div class="theme-preview burgundy-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#12070a"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#d2aa58"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#f7eeee"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Royal Burgundy
+              </span>
+
+              <span class="theme-type">
+                Escuro
+              </span>
+
+            </button>
+
+
+
+            <!-- EMERALD -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="emerald_luxury"
+            >
+
+              <div class="theme-preview emerald-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#06100d"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#cba956"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#edf4f0"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Emerald Luxury
+              </span>
+
+              <span class="theme-type">
+                Escuro
+              </span>
+
+            </button>
+
+
+
+            <!-- IVORY -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="ivory_gold"
+            >
+
+              <div class="theme-preview ivory-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#f6f1e8"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#8a6527"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#1c1915"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Ivory Gold
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+
+            <!-- PEARL -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="pearl_nude"
+            >
+
+              <div class="theme-preview pearl-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#f7efea"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#8f6251"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#342820"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Pearl Nude
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+
+            <!-- MINIMAL -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="minimal_white"
+            >
+
+              <div class="theme-preview minimal-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#fafafa"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#222222"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#8c8c8c"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Minimal White
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+
+            <!-- SAND -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="sand_luxury"
+            >
+
+              <div class="theme-preview sand-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#eee2ce"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#765732"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#28231d"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Sand Luxury
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+
+            <!-- ROSE -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="rose_beige"
+            >
+
+              <div class="theme-preview rose-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#f3e7e2"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#87574c"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#3c2b27"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Rose Beige
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+
+            <!-- ICE -->
+
+            <button
+              type="button"
+              class="theme-card"
+              data-theme="ice_silver"
+            >
+
+              <div class="theme-preview ice-preview">
+
+                <span
+                  class="theme-dot"
+                  style="background:#f3f6f7"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#53636c"
+                ></span>
+
+                <span
+                  class="theme-dot"
+                  style="background:#20272b"
+                ></span>
+
+              </div>
+
+              <span class="theme-name">
+                Ice Silver
+              </span>
+
+              <span class="theme-type">
+                Clean
+              </span>
+
+            </button>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- HERO -->
+
+        <div class="settings-block">
+
+          <h3>
+            Hero
+          </h3>
+
+          <p>
+            Conteúdo principal do início do site.
+          </p>
+
+
+          <label for="settingsHeroTitulo">
+            TÍTULO
+          </label>
+
+          <input
+            id="settingsHeroTitulo"
+            type="text"
+          >
+
+
+          <label for="settingsHeroSlogan">
+            SLOGAN
+          </label>
+
+          <textarea
+            id="settingsHeroSlogan"
+          ></textarea>
+
+
+          <label for="settingsHeroBotao">
+            TEXTO DO BOTÃO
+          </label>
+
+          <input
+            id="settingsHeroBotao"
+            type="text"
+          >
+
+        </div>
+
+
+
+        <!-- SOBRE -->
+
+        <div class="settings-block">
+
+          <h3>
+            Sobre
+          </h3>
+
+          <p>
+            Título e texto institucional da loja.
+          </p>
+
+
+          <label for="settingsSobreTitulo">
+            TÍTULO
+          </label>
+
+          <input
+            id="settingsSobreTitulo"
+            type="text"
+          >
+
+
+          <label for="settingsSobre">
+            TEXTO SOBRE
+          </label>
+
+          <textarea
+            id="settingsSobre"
+          ></textarea>
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="settings-block">
+
+          <h3>
+            Rodapé
+          </h3>
+
+          <p>
+            O copyright será criado automaticamente
+            com o ano atual e o nome da loja.
+          </p>
+
+
+          <label for="settingsFooterTitulo">
+            TÍTULO
+          </label>
+
+          <input
+            id="settingsFooterTitulo"
+            type="text"
+          >
+
+
+          <label for="settingsFooterSubtitulo">
+            SUBTÍTULO
+          </label>
+
+          <input
+            id="settingsFooterSubtitulo"
+            type="text"
+          >
+
+        </div>
+
+
+
+        <!-- CONTATO -->
+
+        <div class="settings-block">
+
+          <h3>
+            Contato
+          </h3>
+
+
+          <div class="settings-grid-2">
+
+
+            <div>
+
+              <label for="settingsWhatsapp">
+                WHATSAPP
+              </label>
+
+              <input
+                id="settingsWhatsapp"
+                type="text"
+              >
+
+            </div>
+
+
+            <div>
+
+              <label for="settingsInstagram">
+                INSTAGRAM
+              </label>
+
+              <input
+                id="settingsInstagram"
+                type="text"
+              >
+
+            </div>
+
+
+          </div>
+
+
+          <label for="settingsEndereco">
+            ENDEREÇO
+          </label>
+
+          <input
+            id="settingsEndereco"
+            type="text"
+          >
+
+
+          <label for="settingsHorario">
+            HORÁRIO
+          </label>
+
+          <input
+            id="settingsHorario"
+            type="text"
+          >
+
+        </div>
+
+
+
+        <button
+          class="save-settings"
+          type="submit"
+        >
+          SALVAR CONFIGURAÇÕES
+        </button>
+
+
+        <p id="settingsMessage"></p>
+
+
+      </form>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ==================================================
+       MODAL PRODUTO
+       ================================================== -->
+
+  <div
+    id="editModal"
+    class="edit-modal"
+    hidden
+  >
+
+
+    <div
+      class="edit-backdrop"
+      id="editBackdrop"
+    ></div>
+
+
+    <div class="edit-card">
+
+
+      <button
+        class="edit-close"
+        id="editClose"
+        type="button"
+      >
+        ×
+      </button>
+
+
+      <h2 id="formTitle">
+        Editar produto
+      </h2>
+
+
+      <form id="editForm">
+
+
+        <input
+          type="hidden"
+          id="editId"
+        >
+
+
+        <label for="editNome">
+          NOME
+        </label>
+
+        <input
+          id="editNome"
+          type="text"
+          required
+        >
+
+
+        <label for="editPreco">
+          PREÇO
+        </label>
+
+        <input
+          id="editPreco"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+        >
+
+
+        <label for="editCategoriaPrincipal">
+          CATEGORIA
+        </label>
+
+        <select
+          id="editCategoriaPrincipal"
+          required
+        >
+        <option value="">Carregando categorias...</option>
+      </select>
+
+
+        <label for="editSubcategoria">
+          SUBCATEGORIA
+        </label>
+
+        <select
+          id="editSubcategoria"
+          required
+        ></select>
+
+
+        <label for="editDescricao">
+          DESCRIÇÃO
+        </label>
+
+        <textarea
+          id="editDescricao"
+        ></textarea>
+
+
+        <label for="editImageFile">
+          IMAGEM
+        </label>
+
+        <input
+          id="editImageFile"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+        <p class="help">
+          JPG, PNG ou WebP até 8 MB. A imagem será comprimida automaticamente.
+        </p>
+
+
+        <input
+          id="editImageUrl"
+          type="hidden"
+        >
+
+
+        <img
+          id="imagePreview"
+          alt="Prévia"
+        >
+
+
+        <label class="check-row">
+
+          <input
+            id="editDestaque"
+            type="checkbox"
+          >
+
+          Produto em destaque
+
+        </label>
+
+
+        <button
+          id="saveProductButton"
+          class="save-edit"
+          type="submit"
+        >
+          SALVAR ALTERAÇÕES
+        </button>
+
+
+        <p id="editMessage"></p>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"
+  ></script>
+
+
+  <script src="config.js"></script>
+  <script src="painel.js"></script>
+
+
+</body>
+</html>

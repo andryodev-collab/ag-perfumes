@@ -1,0 +1,26 @@
+AG PERFUMES — CHECKLIST GO / NO-GO
+
+[ ] Publishable Key correta em admin.js, painel.js e script.js
+[ ] Cadastro público do Supabase desativado
+[ ] Usuário administrador presente em public.admins
+[ ] RLS de produtos/configurações validada
+[ ] Policies de Storage validadas
+[ ] Login e logout funcionando
+[ ] Produto: criar, editar, ocultar, excluir
+[ ] Upload e substituição de imagem funcionando
+[ ] Logo e tema persistindo
+[ ] Catálogo funciona em janela anônima
+[ ] Carrinho persiste após recarregar
+[ ] Quantidades e total conferidos
+[ ] Pix, dinheiro, crédito e débito aparecem no WhatsApp
+[ ] WhatsApp abre com mensagem completa
+[ ] Modal e carrinho testados em 360px, 390px e desktop
+[ ] Navegação com Tab/Enter/Escape testada
+[ ] Todos os 10 temas revisados
+[ ] URLs de Instagram/WhatsApp conferidas
+[ ] HTTPS ativo no domínio final
+[ ] Headers de SECURITY-HEADERS.txt configurados no hosting
+[ ] Console do navegador sem erros
+[ ] Teste final em Chrome Android e Safari iPhone
+
+GO somente quando os itens críticos acima estiverem aprovados.

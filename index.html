@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    id="themeColorMeta"
+    content="#080808"
+  >
+
+  <title>Minha Loja | Catálogo</title>
+
+  <meta id="metaDescription" name="description" content="Catálogo digital. Descubra nossos produtos e monte seu pedido direto pelo WhatsApp.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark light">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta id="ogTitle" property="og:title" content="Minha Loja | Catálogo">
+  <meta id="ogDescription" property="og:description" content="Descubra nossos produtos e monte seu pedido direto pelo WhatsApp.">
+  <meta id="ogSiteName" property="og:site_name" content="Minha Loja">
+
+  <meta name="twitter:card" content="summary">
+  <meta id="twitterTitle" name="twitter:title" content="Minha Loja | Catálogo">
+  <meta id="twitterDescription" name="twitter:description" content="Descubra nossos produtos e monte seu pedido direto pelo WhatsApp.">
+
+  <link id="canonicalLink" rel="canonical" href="">
+  <link id="dynamicFavicon" rel="icon" href="data:,">
+
+  <script id="storeStructuredData" type="application/ld+json">{}</script>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <script src="theme-boot.js"></script>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+
+<body>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <noscript><div class="noscript-message">Este catálogo precisa de JavaScript para carregar produtos e finalizar pedidos.</div></noscript>
+
+
+  <!-- ========================================
+       LOADER
+       ======================================== -->
+
+  <div
+    class="page-loader"
+    id="pageLoader"
+  >
+
+    <div class="loader-logo logo-slot">
+
+      <img
+        id="loaderLogo"
+        alt="Logo"
+        hidden
+      >
+
+      <span
+        id="loaderLogoFallback"
+        class="logo-fallback"
+      >
+       </span>
+
+    </div>
+
+
+    <div
+      class="loader-name"
+      id="loaderName"
+    >
+      MINHA LOJA
+    </div>
+
+  </div>
+
+
+
+  <!-- ========================================
+       HEADER
+       ======================================== -->
+
+  <header class="header">
+
+    <a
+      class="brand"
+      id="headerBrand"
+      href="#inicio"
+      aria-label="Minha Loja"
+    >
+
+      <span class="header-logo logo-slot">
+
+        <img
+          id="headerLogo"
+          alt="Logo"
+          hidden
+        >
+
+        <span
+          id="headerLogoFallback"
+          class="logo-fallback"
+        >
+        </span>
+
+      </span>
+
+
+      <span
+        class="brand-name"
+        id="headerStoreName"
+      >
+        MINHA LOJA
+      </span>
+
+    </a>
+
+
+    <div class="header-actions">
+
+      <button
+        class="cart-button"
+        id="cartButton"
+        type="button"
+        aria-label="Abrir sacola de pedidos"
+        aria-expanded="false"
+        aria-controls="cartDrawer"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 8V7a5 5 0 0 1 10 0v1m-12 0h14l-1 13H6L5 8Zm4 0V7a3 3 0 0 1 6 0v1"/>
+        </svg>
+        <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+      </button>
+
+      <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- ========================================
+       MENU MOBILE
+       ======================================== -->
+
+  <nav
+    class="mobile-menu"
+    id="mobileMenu"
+  >
+
+    <button
+      class="menu-close"
+      id="menuClose"
+      aria-label="Fechar menu"
+    >
+      ×
+    </button>
+
+
+    <div class="menu-brand">
+
+      <div class="menu-logo logo-slot">
+
+        <img
+          id="menuLogo"
+          alt="Logo"
+          hidden
+        >
+
+        <span
+          id="menuLogoFallback"
+          class="logo-fallback"
+        >
+        
+        </span>
+
+      </div>
+
+
+      <strong id="menuStoreName">
+        MINHA LOJA
+      </strong>
+
+    </div>
+
+
+    <a href="#inicio">
+      Início
+    </a>
+
+    <a href="#catalogo">
+      Catálogo
+    </a>
+
+    <a href="#sobre">
+      Sobre
+    </a>
+
+    <a
+      href="#"
+      id="menuWhatsapp"
+    >
+      WhatsApp
+    </a>
+
+  </nav>
+
+
+
+  <!-- ========================================
+       CONTEÚDO
+       ======================================== -->
+
+  <main id="conteudo">
+
+
+    <!-- HERO -->
+
+    <section
+      class="hero"
+      id="inicio"
+    >
+
+      <div class="hero-glow"></div>
+
+
+      <div class="hero-content">
+
+
+        <div class="hero-logo logo-slot">
+
+          <img
+            id="heroLogo"
+            alt="Logo"
+            hidden
+          >
+
+          <span
+            id="heroLogoFallback"
+            class="logo-fallback"
+          >
+            
+          </span>
+
+        </div>
+
+
+        <h1 id="heroTitle">
+          Produtos escolhidos para você.
+        </h1>
+
+
+        <p
+          class="hero-text"
+          id="heroSlogan"
+        >
+          Descubra uma seleção especial e monte seu pedido de forma simples.
+        </p>
+
+
+        <a
+          class="primary-button"
+          href="#catalogo"
+        >
+
+          <span id="heroButtonText">
+            VER CATÁLOGO
+          </span>
+
+          <span aria-hidden="true">
+            ↓
+          </span>
+
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ========================================
+         CATÁLOGO
+         ======================================== -->
+
+    <section
+      class="catalog-section"
+      id="catalogo"
+    >
+
+
+      <div class="section-heading">
+
+        <p
+          class="eyebrow"
+          id="catalogStoreName"
+        >
+          MINHA LOJA
+        </p>
+
+        <h2>
+          Nosso <em>catálogo</em>
+        </h2>
+
+        <p>
+          Encontre seu próximo produto.
+        </p>
+
+      </div>
+
+
+
+      <!-- BUSCA -->
+
+      <div class="catalog-tools">
+
+        <button
+          class="search-toggle"
+          id="searchToggle"
+          aria-label="Buscar"
+        >
+          ⌕
+        </button>
+
+
+        <div
+          class="search-box"
+          id="searchBox"
+        >
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Buscar produto..."
+            autocomplete="off"
+          >
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CATEGORIAS PRINCIPAIS -->
+
+      <div
+        class="filters main-filters"
+        id="mainFilters"
+      >
+        <button class="filter active" data-main-category="todos">Todos</button>
+      </div>
+
+
+
+      <!-- SUBCATEGORIAS -->
+
+      <div
+        class="filters sub-filters"
+        id="subFilters"
+      ></div>
+
+
+
+      <!-- PRODUTOS -->
+
+      <div
+        class="product-grid"
+        id="productGrid"
+      ></div>
+
+
+      <p
+        class="empty-state"
+        id="emptyState"
+      >
+        Nenhum produto encontrado.
+      </p>
+
+
+    </section>
+
+
+
+    <!-- ========================================
+         SOBRE
+         ======================================== -->
+
+    <section
+      class="about"
+      id="sobre"
+    >
+
+      <div class="about-card">
+
+
+        <div class="about-logo logo-slot">
+
+          <img
+            id="aboutLogo"
+            alt="Logo"
+            hidden
+          >
+
+          <span
+            id="aboutLogoFallback"
+            class="logo-fallback"
+          >
+    
+          </span>
+
+        </div>
+
+
+        <h2 id="aboutTitle">
+          Produtos selecionados com cuidado.
+        </h2>
+
+
+        <p id="aboutText">
+          Uma vitrine simples e elegante para você conhecer nossos produtos e falar diretamente com a loja.
+        </p>
+
+
+        <a
+          class="outline-button"
+          href="#catalogo"
+        >
+          EXPLORAR COLEÇÃO
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ========================================
+       FOOTER
+       ======================================== -->
+
+  <footer class="footer">
+
+
+    <h3 id="footerTitle">
+      MINHA LOJA
+    </h3>
+
+
+    <p
+      class="footer-subtitle"
+      id="footerSubtitle"
+    >
+      CATÁLOGO ONLINE
+    </p>
+
+
+
+    <div
+      class="footer-contact"
+      id="footerContact"
+    >
+
+      <div class="social-buttons" id="socialButtons">
+
+        <a
+          class="social-button"
+          id="footerInstagram"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Abrir Instagram da loja"
+          hidden
+        >
+          <span class="social-icon" aria-hidden="true">◎</span>
+          <span>Instagram</span>
+        </a>
+
+        <button
+          class="social-button"
+          id="footerWhatsapp"
+          type="button"
+          aria-label="Falar com a loja pelo WhatsApp"
+          hidden
+        >
+          <span class="social-icon" aria-hidden="true">◉</span>
+          <span>WhatsApp</span>
+        </button>
+
+      </div>
+
+      <span
+        id="footerAddress"
+        hidden
+      ></span>
+
+
+      <span
+        id="footerHours"
+        hidden
+      ></span>
+
+
+    </div>
+
+
+
+    <div class="footer-links">
+
+      <a href="#inicio">
+        Início
+      </a>
+
+      <a href="#catalogo">
+        Catálogo
+      </a>
+
+      <a href="#sobre">
+        Sobre
+      </a>
+
+    </div>
+
+
+    <small id="footerCopyright">
+      © Minha Loja
+    </small>
+
+
+  </footer>
+
+
+
+  <!-- ========================================
+       WHATSAPP
+       ======================================== -->
+
+  <button
+    class="whatsapp-float"
+    id="whatsappFloat"
+    aria-label="Falar no WhatsApp"
+  >
+    ◉
+  </button>
+
+
+
+  <!-- ========================================
+       SACOLA DE PEDIDOS
+       ======================================== -->
+
+  <aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-hidden="true"
+    aria-labelledby="cartTitle"
+  >
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+
+    <section class="cart-panel" role="dialog" aria-modal="true">
+      <header class="cart-header">
+        <div>
+          <p class="eyebrow">SEU PEDIDO</p>
+          <h2 id="cartTitle">Sacola</h2>
+        </div>
+
+        <button class="cart-close" id="cartClose" type="button" aria-label="Fechar sacola">×</button>
+      </header>
+
+      <div class="cart-body">
+        <div class="cart-items" id="cartItems"></div>
+
+        <div class="cart-empty" id="cartEmpty">
+          <span class="cart-empty-icon" aria-hidden="true">◇</span>
+          <h3>Sua sacola está vazia.</h3>
+          <p>Adicione seus favoritos e monte o pedido para enviar pelo WhatsApp.</p>
+          <button class="outline-button" id="cartContinueEmpty" type="button">EXPLORAR PRODUTOS</button>
+        </div>
+      </div>
+
+      <footer class="cart-footer" id="cartFooter">
+        <div class="cart-total-row">
+          <span>Total estimado</span>
+          <strong id="cartTotal">R$ 0,00</strong>
+        </div>
+
+        <fieldset class="payment-methods" id="paymentMethods">
+          <legend>Forma de pagamento</legend>
+          <div class="payment-options">
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="Pix" checked>
+              <span>Pix</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="Dinheiro">
+              <span>Dinheiro</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="Crédito">
+              <span>Crédito</span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="Débito">
+              <span>Débito</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <p class="cart-note">Disponibilidade, pagamento e entrega são confirmados pela loja.</p>
+        <button class="primary-button full cart-checkout" id="cartCheckout" type="button">
+          FINALIZAR NO WHATSAPP
+          <span aria-hidden="true">↗</span>
+        </button>
+        <button class="cart-continue" id="cartContinue" type="button">Continuar comprando</button>
+      </footer>
+    </section>
+  </aside>
+
+
+  <!-- ========================================
+       MODAL DO PRODUTO
+       ======================================== -->
+
+  <div
+    class="modal"
+    id="productModal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalName"
+  >
+
+
+    <div
+      class="modal-backdrop"
+      id="modalBackdrop"
+    ></div>
+
+
+    <article class="modal-card">
+
+
+      <button
+        class="modal-close"
+        id="modalClose"
+        aria-label="Fechar"
+      >
+        ×
+      </button>
+
+
+      <div class="modal-image-wrap">
+
+        <img
+          id="modalImage"
+          src=""
+          alt=""
+        >
+
+      </div>
+
+
+      <div class="modal-content">
+
+        <p
+          class="eyebrow"
+          id="modalCategory"
+        ></p>
+
+
+        <h2 id="modalName"></h2>
+
+
+        <div
+          class="modal-price"
+          id="modalPrice"
+        ></div>
+
+
+        <p id="modalDescription"></p>
+
+
+        <div class="modal-actions">
+
+          <button
+            class="primary-button full add-cart-modal"
+            id="modalAddCart"
+            type="button"
+          >
+            ADICIONAR AO PEDIDO
+            <span aria-hidden="true">＋</span>
+          </button>
+
+          <button
+            class="outline-button full"
+            id="modalWhatsapp"
+            type="button"
+          >
+
+            CONSULTAR NO WHATSAPP
+
+            <span aria-hidden="true">↗</span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+    </article>
+
+  </div>
+
+
+
+  <!-- ========================================
+       SUPABASE
+       ======================================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+
+
+</body>
+</html>

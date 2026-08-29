@@ -1,0 +1,30 @@
+AG PERFUMES / TEMPLATE COMERCIAL V5.1
+
+OBJETIVO
+Esta versão transforma a V5 em um modelo mais fácil de duplicar para novas lojas.
+
+O QUE MUDOU
+1. A Project URL e a Publishable Key agora ficam apenas em config.js.
+2. Categorias e subcategorias também ficam centralizadas em config.js.
+3. Site público e painel passam a montar categorias a partir dessa configuração.
+4. SUPABASE-INSTALACAO-CLIENTE.sql prepara a estrutura base de um projeto novo.
+
+PARA UMA NOVA LOJA
+- Duplique esta pasta.
+- Crie um projeto novo no Supabase.
+- Execute SUPABASE-INSTALACAO-CLIENTE.sql.
+- Crie o usuário administrador no Supabase Authentication.
+- Cadastre o UID na tabela admins conforme instrução no final do SQL.
+- Em Project Settings/API, copie a Project URL e a Publishable Key.
+- Cole os dois valores somente em config.js.
+- Ajuste categories em config.js caso a loja não seja de perfumes.
+- Abra admin.html e teste o login.
+
+SEGURANÇA
+Nunca use service_role no navegador. Nunca coloque senha do banco em config.js.
+
+IMPORTANTE SOBRE OUTROS SEGMENTOS
+As categorias são lidas de config.js. O SQL V5.1 não limita o banco a nomes de categorias de perfumaria.
+Por isso, para roupas, calçados, acessórios, cosméticos, eletrônicos etc., altere categories em config.js antes de cadastrar produtos.
+
+Use SUPABASE-INSTALACAO-CLIENTE.sql em novos projetos. Não use SQLs antigos específicos da AG Perfumes.

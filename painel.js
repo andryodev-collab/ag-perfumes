@@ -587,6 +587,22 @@ function aplicarTemaPainel(
 
 }
 
+// ==================================================
+// SEGURANÇA / ESCAPAR HTML
+// ==================================================
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value);
+}
 
 // ==================================================
 // CATEGORIAS E SUBCATEGORIAS (config.js)

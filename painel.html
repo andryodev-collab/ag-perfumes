@@ -2352,27 +2352,31 @@
         >
 
 
-        <label class="check-row">
+        <label for="editTipoDisponibilidade">
+          DISPONIBILIDADE
+        </label>
+
+        <select
+          id="editTipoDisponibilidade"
+          required
+        >
+          <option value="pronta_entrega">
+            Pronta entrega
+          </option>
+
+          <option value="sob_encomenda">
+            Sob encomenda
+          </option>
+        </select>
+
+
+        <label class="check-row" for="editDestaque">
 
           <input
             id="editDestaque"
             type="checkbox"
           >
 
-          <label for="editTipoDisponibilidade">
-  DISPONIBILIDADE
-</label>
-
-<select id="editTipoDisponibilidade">
-  <option value="pronta_entrega">
-    Pronta entrega
-  </option>
-
-  <option value="sob_encomenda">
-    Sob encomenda
-  </option>
-</select>
-          
           Produto em destaque
 
         </label>

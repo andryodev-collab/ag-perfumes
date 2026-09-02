@@ -23,7 +23,8 @@ window.APP_CONFIG = {
       subcategories: [
         { value: "masculino", label: "Masculino" },
         { value: "feminino", label: "Feminino" },
-        { value: "unissex", label: "Unissex" }
+        { value: "unissex", label: "Unissex" },
+        { value: "bodysplash", label: "Body Splash" }
       ]
     },
     {

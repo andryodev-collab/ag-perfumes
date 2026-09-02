@@ -142,6 +142,11 @@ const editDestaque =
     "editDestaque"
   );
 
+const editTipoDisponibilidade =
+  document.getElementById(
+    "editTipoDisponibilidade"
+  );
+
 const editImageFile =
   document.getElementById(
     "editImageFile"
@@ -787,6 +792,11 @@ function abrirNovoProduto() {
   editDestaque.checked =
     false;
 
+  if (editTipoDisponibilidade) {
+    editTipoDisponibilidade.value =
+      "pronta_entrega";
+  }
+
 
   editImageFile.value =
     "";
@@ -865,6 +875,12 @@ function abrirEdicao(
 
   editDestaque.checked =
     !!produto.destaque;
+
+  if (editTipoDisponibilidade) {
+    editTipoDisponibilidade.value =
+      produto.tipo_disponibilidade ||
+      "pronta_entrega";
+  }
 
 
   editImageFile.value =
@@ -2099,7 +2115,12 @@ editForm.addEventListener(
         imageUrl,
 
       destaque:
-        editDestaque.checked
+        editDestaque.checked,
+
+      tipo_disponibilidade:
+        editTipoDisponibilidade
+          ? editTipoDisponibilidade.value
+          : "pronta_entrega"
 
     };
 

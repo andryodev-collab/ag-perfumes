@@ -2992,3 +2992,46 @@ body.cart-open {
   }
 }
 \n\n/* ==================================================\n   V5 — ACESSIBILIDADE, LEGIBILIDADE E POLIMENTO FINAL\n   ================================================== */\n\n.skip-link {\n  position: fixed;\n  top: 12px;\n  left: 12px;\n  z-index: 5000;\n  transform: translateY(-160%);\n  padding: 11px 15px;\n  border-radius: 999px;\n  background: var(--accent);\n  color: var(--button-text);\n  font-size: 12px;\n  font-weight: 800;\n  letter-spacing: .7px;\n  transition: transform .2s ease;\n}\n\n.skip-link:focus { transform: translateY(0); }\n\n.noscript-message {\n  position: relative;\n  z-index: 3000;\n  padding: 12px 16px;\n  border-bottom: 1px solid var(--line);\n  background: var(--surface);\n  color: var(--text);\n  text-align: center;\n  font-size: 13px;\n}\n\n:focus-visible {\n  outline: 2px solid var(--accent);\n  outline-offset: 3px;\n}\n\nbutton,\n[role="button"],\na {\n  -webkit-tap-highlight-color: transparent;\n}\n\n.product-card.image-missing::before,\n.modal-image-wrap.image-missing::before { font-size: 10px; }\n.product-card.featured::before { font-size: 10px; }\n.cart-item-media.image-missing::before { font-size: 9px; }\n.cart-item-top p { font-size: 10px; }\n.product-details,\n.product-add { font-size: 10px; }\n\n.hero h1,\n.section-title,\n.about-title,\n.modal-content h2 { text-wrap: balance; }\n\n.hero-text,\n.about-text,\n.modal-content p { text-wrap: pretty; }\n\n@media (max-width: 640px) {\n  .product-details,\n  .product-add {\n    min-height: 44px;\n    font-size: 10.5px;\n  }\n\n  .product-category { font-size: 10.5px; }\n  .product-price { font-size: 13px; }\n  .cart-item-top p { font-size: 10.5px; }\n\n  .modal-actions .primary-button,\n  .modal-actions .outline-button,\n  .cart-checkout,\n  .cart-continue { min-height: 48px; }\n}\n\n@media (max-width: 380px) {\n  .product-details,\n  .product-add {\n    padding-inline: 8px;\n    font-size: 10px;\n    letter-spacing: .55px;\n  }\n}\n\n@media print {\n  .header, .mobile-menu, .page-loader, .cart-drawer, .modal, .hero-button, .product-actions { display: none !important; }\n  body { background: #fff; color: #000; }\n}\n
+
+/* ==================================================
+   DISPONIBILIDADE DO PRODUTO
+   ================================================== */
+
+.availability-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 22px;
+  margin-bottom: 9px;
+  padding: 5px 8px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.availability-tag.is-ready {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.availability-tag.is-order {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 8%, transparent);
+}
+
+.modal-availability {
+  margin: 0 0 8px;
+  font-size: 8px;
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .availability-tag.is-ready,
+  .availability-tag.is-order {
+    background: transparent;
+  }
+}
+

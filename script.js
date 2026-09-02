@@ -1595,7 +1595,11 @@ async function carregarProdutos() {
           produto.image_url,
 
         destaque:
-          produto.destaque
+          produto.destaque,
+
+        availability:
+          produto.tipo_disponibilidade ||
+          "pronta_entrega"
 
       })
     );
@@ -1678,6 +1682,27 @@ function label(
     category ||
     ""
   );
+
+}
+
+
+// ==================================================
+// DISPONIBILIDADE
+// ==================================================
+
+function availabilityLabel(value) {
+
+  return value === "sob_encomenda"
+    ? "SOB ENCOMENDA"
+    : "PRONTA ENTREGA";
+
+}
+
+function availabilityClass(value) {
+
+  return value === "sob_encomenda"
+    ? "is-order"
+    : "is-ready";
 
 }
 
@@ -2078,6 +2103,12 @@ function renderProducts() {
 
           <div class="product-info">
 
+            <span
+              class="availability-tag ${availabilityClass(produto.availability)}"
+            >
+              ${availabilityLabel(produto.availability)}
+            </span>
+
             <h3 class="product-name">
               ${escapeHtml(produto.name)}
             </h3>
@@ -2228,13 +2259,53 @@ function openProduct(
     );
 
 
-  document
-    .getElementById(
+  const modalName =
+    document.getElementById(
       "modalName"
-    )
-    .textContent =
-    produto.name ||
-    "";
+    );
+
+  let modalAvailability =
+    document.getElementById(
+      "modalAvailability"
+    );
+
+  if (!modalAvailability && modalName) {
+
+    modalAvailability =
+      document.createElement(
+        "span"
+      );
+
+    modalAvailability.id =
+      "modalAvailability";
+
+    modalName.parentNode.insertBefore(
+      modalAvailability,
+      modalName
+    );
+
+  }
+
+  if (modalAvailability) {
+
+    modalAvailability.className =
+      `availability-tag modal-availability ${availabilityClass(produto.availability)}`;
+
+    modalAvailability.textContent =
+      availabilityLabel(
+        produto.availability
+      );
+
+  }
+
+
+  if (modalName) {
+
+    modalName.textContent =
+      produto.name ||
+      "";
+
+  }
 
 
   document

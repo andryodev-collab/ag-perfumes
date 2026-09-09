@@ -2991,7 +2991,100 @@ body.cart-open {
     animation: none !important;
   }
 }
-\n\n/* ==================================================\n   V5 — ACESSIBILIDADE, LEGIBILIDADE E POLIMENTO FINAL\n   ================================================== */\n\n.skip-link {\n  position: fixed;\n  top: 12px;\n  left: 12px;\n  z-index: 5000;\n  transform: translateY(-160%);\n  padding: 11px 15px;\n  border-radius: 999px;\n  background: var(--accent);\n  color: var(--button-text);\n  font-size: 12px;\n  font-weight: 800;\n  letter-spacing: .7px;\n  transition: transform .2s ease;\n}\n\n.skip-link:focus { transform: translateY(0); }\n\n.noscript-message {\n  position: relative;\n  z-index: 3000;\n  padding: 12px 16px;\n  border-bottom: 1px solid var(--line);\n  background: var(--surface);\n  color: var(--text);\n  text-align: center;\n  font-size: 13px;\n}\n\n:focus-visible {\n  outline: 2px solid var(--accent);\n  outline-offset: 3px;\n}\n\nbutton,\n[role="button"],\na {\n  -webkit-tap-highlight-color: transparent;\n}\n\n.product-card.image-missing::before,\n.modal-image-wrap.image-missing::before { font-size: 10px; }\n.product-card.featured::before { font-size: 10px; }\n.cart-item-media.image-missing::before { font-size: 9px; }\n.cart-item-top p { font-size: 10px; }\n.product-details,\n.product-add { font-size: 10px; }\n\n.hero h1,\n.section-title,\n.about-title,\n.modal-content h2 { text-wrap: balance; }\n\n.hero-text,\n.about-text,\n.modal-content p { text-wrap: pretty; }\n\n@media (max-width: 640px) {\n  .product-details,\n  .product-add {\n    min-height: 44px;\n    font-size: 10.5px;\n  }\n\n  .product-category { font-size: 10.5px; }\n  .product-price { font-size: 13px; }\n  .cart-item-top p { font-size: 10.5px; }\n\n  .modal-actions .primary-button,\n  .modal-actions .outline-button,\n  .cart-checkout,\n  .cart-continue { min-height: 48px; }\n}\n\n@media (max-width: 380px) {\n  .product-details,\n  .product-add {\n    padding-inline: 8px;\n    font-size: 10px;\n    letter-spacing: .55px;\n  }\n}\n\n@media print {\n  .header, .mobile-menu, .page-loader, .cart-drawer, .modal, .hero-button, .product-actions { display: none !important; }\n  body { background: #fff; color: #000; }\n}\n
+
+
+/* ==================================================
+   V5 — ACESSIBILIDADE, LEGIBILIDADE E POLIMENTO FINAL
+   ================================================== */
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 5000;
+  transform: translateY(-160%);
+  padding: 11px 15px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--button-text);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  transition: transform .2s ease;
+}
+
+.skip-link:focus { transform: translateY(0); }
+
+.noscript-message {
+  position: relative;
+  z-index: 3000;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  text-align: center;
+  font-size: 13px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+button,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-card.image-missing::before,
+.modal-image-wrap.image-missing::before { font-size: 10px; }
+.product-card.featured::before { font-size: 10px; }
+.cart-item-media.image-missing::before { font-size: 9px; }
+.cart-item-top p { font-size: 10px; }
+.product-details,
+.product-add { font-size: 10px; }
+
+.hero h1,
+.section-title,
+.about-title,
+.modal-content h2 { text-wrap: balance; }
+
+.hero-text,
+.about-text,
+.modal-content p { text-wrap: pretty; }
+
+@media (max-width: 640px) {
+  .product-details,
+  .product-add {
+    min-height: 44px;
+    font-size: 10.5px;
+  }
+
+  .product-category { font-size: 10.5px; }
+  .product-price { font-size: 13px; }
+  .cart-item-top p { font-size: 10.5px; }
+
+  .modal-actions .primary-button,
+  .modal-actions .outline-button,
+  .cart-checkout,
+  .cart-continue { min-height: 48px; }
+}
+
+@media (max-width: 380px) {
+  .product-details,
+  .product-add {
+    padding-inline: 8px;
+    font-size: 10px;
+    letter-spacing: .55px;
+  }
+}
+
+@media print {
+  .header, .mobile-menu, .page-loader, .cart-drawer, .modal, .hero-button, .product-actions { display: none !important; }
+  body { background: #fff; color: #000; }
+}
+
 
 /* ==================================================
    DISPONIBILIDADE DO PRODUTO
@@ -3032,6 +3125,84 @@ body.cart-open {
   .availability-tag.is-ready,
   .availability-tag.is-order {
     background: transparent;
+  }
+}
+
+/* ==================================================
+   V5.2.1 — CORREÇÃO DE CARDS / IMAGEM AUSENTE
+   ================================================== */
+
+/* Cada card mantém apenas a própria altura.
+   Evita que um produto problemático estique todos os cards da mesma linha. */
+.product-grid {
+  align-items: start;
+}
+
+/* Estrutura previsível para todos os produtos. */
+.product-card {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+}
+
+/* Imagens sempre ocupam a mesma proporção visual. */
+.product-image {
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  height: auto;
+  max-height: none;
+  object-fit: cover;
+}
+
+/* O conteúdo nunca força a área de mídia a crescer. */
+.product-info {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+/* Placeholder de imagem ausente com exatamente a mesma proporção das fotos. */
+.product-card.image-missing::before {
+  content: "IMAGEM INDISPONÍVEL";
+  position: static;
+  inset: auto;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1.15;
+  min-height: 0;
+  max-height: none;
+  padding: 20px;
+  border-radius: 17px 17px 0 0;
+  background: var(--surface2);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 1.4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* A imagem quebrada permanece fora do layout. */
+.product-card.image-missing .product-image[hidden] {
+  display: none !important;
+}
+
+/* Mantém ações alinhadas e sem criar áreas vazias artificiais. */
+.product-actions {
+  margin-top: 10px;
+}
+
+/* Desktop */
+@media (min-width: 700px) {
+  .product-card.image-missing::before {
+    border-radius: 19px 19px 0 0;
   }
 }
 

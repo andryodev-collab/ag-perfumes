@@ -1,6 +1,7 @@
 /* ==========================================================
-   AG PERFUMES V5.3 — PÁGINA DO PRODUTO
+   AG PERFUMES V5.3.1 — PÁGINA DO PRODUTO
    Usa somente variáveis do sistema de temas.
+   Refinada a partir do preview mobile real.
    ========================================================== */
 
 .product-page {
@@ -13,32 +14,33 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  min-height: 68px;
-  padding: 8px 12px;
+  min-height: 64px;
+  padding: 7px 10px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: var(--header-bg);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
 }
 
 .product-nav-button {
+  min-width: 44px;
   min-height: 44px;
-  padding: 0 12px;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--surface);
   color: var(--text);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: .5px;
+  letter-spacing: .4px;
 }
 
 .product-nav-button:hover,
@@ -53,13 +55,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
 }
 
 .product-brand-logo {
-  width: 36px;
-  height: 36px;
-  flex: 0 0 36px;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
 }
 
 .product-brand-logo img {
@@ -75,15 +77,15 @@
   white-space: nowrap;
   color: var(--accent);
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .product-detail-shell {
   width: min(100%, 1120px);
   margin: 0 auto;
-  padding: 18px 14px 42px;
+  padding: 14px 14px 38px;
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
 .product-detail-media,
@@ -95,18 +97,19 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  aspect-ratio: 1 / 1.06;
+  aspect-ratio: 1.18 / 1;
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 22px;
   background: var(--surface2);
-  box-shadow: 0 18px 48px color-mix(in srgb, var(--shadow) 22%, transparent);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--shadow) 18%, transparent);
 }
 
 .product-detail-image-wrap img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 10px;
 }
 
 .product-detail-image-wrap.image-missing::before {
@@ -128,58 +131,64 @@
 }
 
 .product-detail-info {
-  padding: 4px 4px 0;
+  padding: 2px 4px 0;
 }
 
 .product-detail-info .eyebrow {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 9px;
+  letter-spacing: 2px;
 }
 
 .product-detail-info .availability-tag {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .product-detail-info h1 {
   margin: 0 0 10px;
   font-family: var(--serif);
-  font-size: clamp(38px, 11vw, 64px);
+  font-size: clamp(30px, 8vw, 46px);
   font-weight: 500;
-  line-height: .96;
+  line-height: .98;
   text-wrap: balance;
 }
 
 .product-detail-price {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: var(--accent);
   font-family: var(--serif);
-  font-size: clamp(27px, 8vw, 38px);
+  font-size: clamp(24px, 6.5vw, 34px);
   font-weight: 600;
 }
 
 .product-detail-description {
-  margin: 0 0 24px;
+  margin: 0 0 22px;
   color: var(--muted);
-  font-size: 14px;
-  line-height: 1.75;
+  font-size: 13px;
+  line-height: 1.7;
   white-space: pre-line;
 }
 
 .product-detail-actions {
   display: grid;
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 9px;
 }
 
+.product-detail-actions .primary-button,
 .product-detail-actions .outline-button {
   min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 10px;
+  padding-inline: 14px;
+  font-size: 9px;
 }
 
 .product-back-catalog {
   width: fit-content;
-  margin-top: 20px;
+  margin-top: 18px;
   display: inline-block;
   color: var(--muted);
   font-size: 11px;
@@ -194,7 +203,7 @@
 }
 
 .product-state {
-  min-height: calc(100svh - 68px);
+  min-height: calc(100svh - 64px);
   padding: 24px;
   display: grid;
   place-items: center;
@@ -212,7 +221,7 @@
   gap: 12px;
   text-align: center;
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 22px;
   background: var(--surface);
 }
 
@@ -247,41 +256,49 @@
   #productBack span:last-child {
     display: none;
   }
+}
 
-  .product-nav-button {
-    width: 44px;
-    padding: 0;
-  }
-
-  .product-brand strong {
-    font-size: 16px;
+@media (min-width: 390px) and (max-width: 759px) {
+  .product-detail-actions {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 760px) {
   .product-topbar {
     padding-inline: 24px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .product-nav-button {
+    min-width: 0;
+    padding: 0 12px;
+    border-radius: 999px;
   }
 
   .product-detail-shell {
-    padding: 42px 26px 70px;
-    grid-template-columns: minmax(0, 1.02fr) minmax(320px, .98fr);
+    padding: 38px 26px 64px;
+    grid-template-columns: minmax(0, 1.04fr) minmax(320px, .96fr);
     align-items: center;
-    gap: clamp(34px, 6vw, 74px);
+    gap: clamp(32px, 5vw, 64px);
   }
 
   .product-detail-image-wrap {
-    aspect-ratio: 1 / 1.08;
+    aspect-ratio: 1 / 1;
   }
 
   .product-detail-info {
     padding-right: clamp(0px, 3vw, 28px);
   }
+
+  .product-detail-actions {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (min-width: 1100px) {
   .product-detail-shell {
-    min-height: calc(100svh - 68px);
+    min-height: calc(100svh - 64px);
   }
 }
 

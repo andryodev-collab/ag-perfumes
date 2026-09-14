@@ -78,6 +78,7 @@
   function showError() {
     $("productLoading").hidden = true;
     $("productContent").hidden = true;
+    $("productMobileActions").hidden = true;
     $("productError").hidden = false;
   }
 
@@ -123,6 +124,28 @@
       "_blank",
       "noopener,noreferrer"
     );
+  }
+
+  async function shareProduct() {
+    if (!currentProduct) return;
+
+    const url = location.href;
+    const title = `${currentProduct.nome || "Produto"} | ${STORE_NAME}`;
+    const text = `Confira ${currentProduct.nome || "este produto"} na ${STORE_NAME}.`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url });
+        return;
+      }
+
+      await navigator.clipboard.writeText(url);
+      showToast("Link do produto copiado.");
+    } catch (error) {
+      if (error?.name !== "AbortError") {
+        showToast("Não foi possível compartilhar agora.");
+      }
+    }
   }
 
   function renderStore(config) {
@@ -180,6 +203,7 @@
     $("productLoading").hidden = true;
     $("productError").hidden = true;
     $("productContent").hidden = false;
+    $("productMobileActions").hidden = false;
   }
 
   async function init() {
@@ -227,7 +251,10 @@
   });
 
   $("productAddCart")?.addEventListener("click", addToCart);
+  $("productAddCartMobile")?.addEventListener("click", addToCart);
   $("productWhatsapp")?.addEventListener("click", openWhatsapp);
+  $("productWhatsappMobile")?.addEventListener("click", openWhatsapp);
+  $("productShare")?.addEventListener("click", shareProduct);
 
   init();
 })();

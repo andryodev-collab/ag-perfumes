@@ -26,31 +26,20 @@
   root.style.setProperty("--header-bg", tema.header);
   root.style.backgroundColor = tema.bg;
 
-  // V5.3 preview: ativa somente na vitrine principal.
-  // Admin, painel e página de produto continuam independentes.
   const path = location.pathname.toLowerCase();
   const isStorefront = path.endsWith("/") || path.endsWith("/index.html");
 
   if (isStorefront) {
-    const appStyle = document.createElement("link");
-    appStyle.rel = "stylesheet";
-    appStyle.href = "app-style.css";
-    document.head.appendChild(appStyle);
-
-    const heroLockup = document.createElement("link");
-    heroLockup.rel = "stylesheet";
-    heroLockup.href = "hero-v533.css";
-    document.head.appendChild(heroLockup);
-
-    const priceFilter = document.createElement("link");
-    priceFilter.rel = "stylesheet";
-    priceFilter.href = "price-filter-v534.css";
-    document.head.appendChild(priceFilter);
-
-    const availabilityFilter = document.createElement("link");
-    availabilityFilter.rel = "stylesheet";
-    availabilityFilter.href = "availability-filter-v535.css";
-    document.head.appendChild(availabilityFilter);
+    [
+      "app-style.css",
+      "hero-v533.css",
+      "unified-filter-v536.css"
+    ].forEach(href => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      document.head.appendChild(link);
+    });
 
     window.addEventListener("DOMContentLoaded", () => {
       const appScript = document.createElement("script");

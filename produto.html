@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="produto.css">
 </head>
-<body class="product-page">
+<body class="product-page product-page-v532">
   <header class="product-topbar">
     <button class="product-nav-button" id="productBack" type="button" aria-label="Voltar para a página anterior">
       <span aria-hidden="true">←</span>
@@ -38,17 +38,25 @@
     <section class="product-detail-media">
       <div class="product-detail-image-wrap" id="productImageWrap">
         <img id="productImage" alt="" loading="eager">
+        <button class="product-share" id="productShare" type="button" aria-label="Compartilhar produto">
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div class="product-image-note" aria-hidden="true">
+        <span class="active"></span><span></span><span></span>
       </div>
     </section>
 
     <section class="product-detail-info">
-      <p class="eyebrow" id="productCategory"></p>
-      <span class="availability-tag" id="productAvailability"></span>
+      <div class="product-meta-row">
+        <p class="eyebrow" id="productCategory"></p>
+        <span class="availability-tag" id="productAvailability"></span>
+      </div>
       <h1 id="productName">Produto</h1>
       <p class="product-detail-price" id="productPrice">R$ 0,00</p>
       <p class="product-detail-description" id="productDescription"></p>
 
-      <div class="product-detail-actions">
+      <div class="product-detail-actions product-detail-actions-desktop">
         <button class="primary-button full" id="productAddCart" type="button">
           ADICIONAR AO PEDIDO
           <span aria-hidden="true">＋</span>
@@ -62,6 +70,11 @@
       <a class="product-back-catalog" href="index.html#catalogo">← Voltar ao catálogo</a>
     </section>
   </main>
+
+  <div class="product-mobile-actions" id="productMobileActions" hidden>
+    <button class="outline-button" id="productWhatsappMobile" type="button">WHATSAPP</button>
+    <button class="primary-button" id="productAddCartMobile" type="button">ADICIONAR</button>
+  </div>
 
   <section class="product-state" id="productLoading">
     <div class="product-state-card">

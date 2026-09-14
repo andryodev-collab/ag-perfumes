@@ -35,7 +35,8 @@
       "hero-v533.css",
       "unified-filter-v536.css",
       "storefront-polish-v537.css",
-      "cart-mobile-fix-v539.css"
+      "cart-mobile-fix-v539.css",
+      "payment-select-v540.css"
     ].forEach(href => {
       const link = document.createElement("link");
       link.rel = "stylesheet";
@@ -47,6 +48,10 @@
       const appScript = document.createElement("script");
       appScript.src = "app-style-safe.js";
       document.body.appendChild(appScript);
+
+      const paymentScript = document.createElement("script");
+      paymentScript.src = "payment-select-v540.js";
+      document.body.appendChild(paymentScript);
     }, { once: true });
   }
 })();

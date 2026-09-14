@@ -1,11 +1,15 @@
 (() => {
   "use strict";
 
-  document.body.classList.add("app-v53", "app-v532");
+  document.body.classList.add("app-v53", "app-v532", "app-v534");
 
   const productUrl = id => `produto.html?id=${encodeURIComponent(id)}`;
   const productGrid = document.getElementById("productGrid");
   const catalog = document.getElementById("catalogo");
+  const emptyState = document.getElementById("emptyState");
+
+  let priceMin = null;
+  let priceMax = null;
 
   // Página própria do produto.
   document.addEventListener(
@@ -213,9 +217,172 @@
     });
   }
 
+  function formatMoneyShort(value) {
+    return Number(value).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      maximumFractionDigits: 0
+    });
+  }
+
+  function currentPriceSummary() {
+    if (priceMin == null && priceMax == null) return "Todos os preços";
+    if (priceMin == null) return `Até ${formatMoneyShort(priceMax)}`;
+    if (priceMax == null) return `Acima de ${formatMoneyShort(priceMin)}`;
+    return `${formatMoneyShort(priceMin)} – ${formatMoneyShort(priceMax)}`;
+  }
+
+  function applyPriceFilter() {
+    if (!productGrid) return;
+
+    const cards = [...productGrid.querySelectorAll(".product-card")];
+    let visible = 0;
+
+    cards.forEach(card => {
+      const id = Number(card.dataset.id);
+      let product = null;
+      try {
+        product = products.find(item => Number(item.id) === id);
+      } catch (_) {}
+
+      const price = Number(product?.price);
+      const passMin = priceMin == null || price >= priceMin;
+      const passMax = priceMax == null || price <= priceMax;
+      const show = Number.isFinite(price) && passMin && passMax;
+
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+
+    const summary = document.getElementById("appPriceSummary");
+    if (summary) summary.textContent = currentPriceSummary();
+
+    const clear = document.getElementById("appPriceClear");
+    if (clear) clear.hidden = priceMin == null && priceMax == null;
+
+    document.querySelectorAll(".app-price-preset").forEach(button => {
+      const min = button.dataset.min === "" ? null : Number(button.dataset.min);
+      const max = button.dataset.max === "" ? null : Number(button.dataset.max);
+      button.classList.toggle("active", min === priceMin && max === priceMax);
+    });
+
+    if (emptyState && cards.length) {
+      if (visible) {
+        emptyState.style.display = "none";
+      } else {
+        emptyState.textContent = "Nenhum produto encontrado nessa faixa de preço.";
+        emptyState.style.display = "block";
+      }
+    }
+  }
+
+  function setPriceRange(min, max) {
+    priceMin = Number.isFinite(min) ? Math.max(0, min) : null;
+    priceMax = Number.isFinite(max) ? Math.max(0, max) : null;
+
+    if (priceMin != null && priceMax != null && priceMin > priceMax) {
+      [priceMin, priceMax] = [priceMax, priceMin];
+    }
+
+    const minInput = document.getElementById("appPriceMin");
+    const maxInput = document.getElementById("appPriceMax");
+    if (minInput) minInput.value = priceMin ?? "";
+    if (maxInput) maxInput.value = priceMax ?? "";
+
+    applyPriceFilter();
+  }
+
+  function parsePriceInput(value) {
+    const normalized = String(value || "")
+      .replace(/[^0-9,.-]/g, "")
+      .replace(",", ".");
+    const number = Number(normalized);
+    return Number.isFinite(number) ? number : null;
+  }
+
+  function buildPriceFilter() {
+    if (!catalog || document.getElementById("appPriceFilter")) return;
+
+    const mainFilters = document.getElementById("mainFilters");
+    const subFilters = document.getElementById("subFilters");
+    const anchor = subFilters || mainFilters;
+    if (!anchor) return;
+
+    const wrap = document.createElement("div");
+    wrap.id = "appPriceFilter";
+    wrap.className = "app-price-filter";
+    wrap.innerHTML = `
+      <div class="app-price-toolbar">
+        <button class="app-price-toggle" id="appPriceToggle" type="button" aria-expanded="false" aria-controls="appPricePanel">
+          <span class="price-filter-icon" aria-hidden="true">↕</span>
+          <span>Preço</span>
+          <span class="price-filter-summary" id="appPriceSummary">Todos os preços</span>
+        </button>
+        <button class="app-price-clear" id="appPriceClear" type="button" hidden>Limpar</button>
+      </div>
+
+      <div class="app-price-panel" id="appPricePanel" hidden>
+        <p class="app-price-panel-title">Filtrar por faixa de preço</p>
+        <div class="app-price-presets" aria-label="Faixas rápidas de preço">
+          <button class="app-price-preset" type="button" data-min="" data-max="150">Até R$ 150</button>
+          <button class="app-price-preset" type="button" data-min="150" data-max="300">R$ 150–300</button>
+          <button class="app-price-preset" type="button" data-min="300" data-max="500">R$ 300–500</button>
+          <button class="app-price-preset" type="button" data-min="500" data-max="">R$ 500+</button>
+        </div>
+
+        <div class="app-price-custom">
+          <label class="app-price-field">
+            <span>Mínimo</span>
+            <input id="appPriceMin" type="number" inputmode="decimal" min="0" step="10" placeholder="R$ 0">
+          </label>
+          <label class="app-price-field">
+            <span>Máximo</span>
+            <input id="appPriceMax" type="number" inputmode="decimal" min="0" step="10" placeholder="Sem limite">
+          </label>
+          <button class="app-price-apply" id="appPriceApply" type="button">APLICAR FAIXA</button>
+        </div>
+      </div>
+    `;
+
+    anchor.insertAdjacentElement("afterend", wrap);
+
+    const toggle = document.getElementById("appPriceToggle");
+    const panel = document.getElementById("appPricePanel");
+    const clear = document.getElementById("appPriceClear");
+    const apply = document.getElementById("appPriceApply");
+
+    toggle?.addEventListener("click", () => {
+      const open = panel?.hidden ?? true;
+      if (panel) panel.hidden = !open;
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+
+    clear?.addEventListener("click", () => {
+      setPriceRange(null, null);
+    });
+
+    wrap.querySelectorAll(".app-price-preset").forEach(button => {
+      button.addEventListener("click", () => {
+        const min = button.dataset.min === "" ? null : Number(button.dataset.min);
+        const max = button.dataset.max === "" ? null : Number(button.dataset.max);
+        setPriceRange(min, max);
+      });
+    });
+
+    apply?.addEventListener("click", () => {
+      const min = parsePriceInput(document.getElementById("appPriceMin")?.value);
+      const max = parsePriceInput(document.getElementById("appPriceMax")?.value);
+      setPriceRange(min, max);
+      if (panel) panel.hidden = true;
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  }
+
   function refreshEnhancements() {
     normalizeCardLabels();
     buildDiscovery();
+    buildPriceFilter();
+    applyPriceFilter();
   }
 
   if (productGrid) {

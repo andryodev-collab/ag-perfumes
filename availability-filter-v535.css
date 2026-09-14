@@ -1,0 +1,76 @@
+/* ==========================================================
+   AG PERFUMES V5.3.5 — FILTRO DE DISPONIBILIDADE
+   Usa somente variáveis do tema atual.
+   ========================================================== */
+
+.app-availability-filter {
+  margin: -8px 0 18px;
+}
+
+.app-availability-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.app-availability-options {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.app-availability-options::-webkit-scrollbar {
+  display: none;
+}
+
+.app-availability-option {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .35px;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.app-availability-option:hover,
+.app-availability-option:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.app-availability-option.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--button-text);
+}
+
+/* O preço usa hidden; disponibilidade usa este estado independente. */
+.product-card[data-availability-match="false"] {
+  display: none !important;
+}
+
+@media (min-width: 700px) {
+  .app-availability-filter {
+    margin-top: -7px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-availability-option {
+    transition: none !important;
+  }
+}

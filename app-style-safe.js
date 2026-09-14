@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  document.body.classList.add("app-v53", "app-v536-safe");
+  document.body.classList.add("app-v53", "app-v536-safe", "app-v538-filter-fix");
 
   const productUrl = id => `produto.html?id=${encodeURIComponent(id)}`;
   const productGrid = document.getElementById("productGrid");
@@ -208,7 +208,17 @@
   }
 
   function parsePrice(value) {
-    const normalized = String(value || "").replace(/[^0-9,.-]/g, "").replace(",", ".");
+    const raw = String(value ?? "").trim();
+    if (!raw) return null;
+
+    const normalized = raw
+      .replace(/[^0-9,.-]/g, "")
+      .replace(",", ".");
+
+    if (!normalized || normalized === "." || normalized === "-" || normalized === "-.") {
+      return null;
+    }
+
     const number = Number(normalized);
     return Number.isFinite(number) ? Math.max(0, number) : null;
   }
@@ -275,6 +285,7 @@
       const show = passPrice && passAvailability && passFeatured;
 
       card.hidden = !show;
+      card.style.display = show ? "" : "none";
       card.style.order = "";
       if (show) visible.push({ card, product });
     });
@@ -286,8 +297,6 @@
       name_asc: (a, b) => String(a.product?.name || "").localeCompare(String(b.product?.name || ""), "pt-BR")
     }[sortMode] || (() => 0);
 
-    // IMPORTANTE: ordena com CSS order. Não move nós do DOM.
-    // Isso evita o loop do MutationObserver que travava a página.
     visible.sort(comparator).forEach(({ card }, index) => {
       card.style.order = String(index);
     });

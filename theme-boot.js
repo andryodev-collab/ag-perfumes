@@ -25,4 +25,20 @@
   root.style.setProperty("--line", tema.line);
   root.style.setProperty("--header-bg", tema.header);
   root.style.backgroundColor = tema.bg;
+
+  // V5.3 preview: injeta a camada visual sem alterar a V5.2 de produção.
+  const isProductPage = /(^|\/)produto\.html$/i.test(location.pathname);
+
+  if (!isProductPage) {
+    const appStyle = document.createElement("link");
+    appStyle.rel = "stylesheet";
+    appStyle.href = "app-style.css";
+    document.head.appendChild(appStyle);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const appScript = document.createElement("script");
+      appScript.src = "app-style.js";
+      document.body.appendChild(appScript);
+    }, { once: true });
+  }
 })();

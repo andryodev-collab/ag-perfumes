@@ -43,7 +43,7 @@
 
     window.addEventListener("DOMContentLoaded", () => {
       const appScript = document.createElement("script");
-      appScript.src = "app-style.js";
+      appScript.src = "app-style-safe.js";
       document.body.appendChild(appScript);
     }, { once: true });
   }

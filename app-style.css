@@ -1,0 +1,392 @@
+/* ==========================================================
+   AG PERFUMES V5.3 — APP STYLE PREVIEW
+   Camada visual sobre a V5.2 estável.
+   Mantém 100% das cores vindas do sistema de temas.
+   ========================================================== */
+
+:root {
+  --app-max: 1180px;
+  --app-radius: 22px;
+  --app-radius-sm: 16px;
+  --app-gap: clamp(12px, 2vw, 20px);
+}
+
+body.app-v53 {
+  padding-bottom: calc(78px + env(safe-area-inset-bottom));
+}
+
+body.app-v53 .header {
+  height: 68px;
+  padding: 0 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  box-shadow: none;
+}
+
+body.app-v53 .brand-name {
+  font-size: 18px;
+  letter-spacing: .2px;
+}
+
+body.app-v53 .header-logo,
+body.app-v53 .header-logo img {
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+}
+
+/* HERO COM CARA DE BANNER/APP */
+body.app-v53 .hero {
+  min-height: auto;
+  padding: 42px 18px 34px;
+  background:
+    radial-gradient(circle at 50% 18%, var(--hero-center), var(--hero-middle) 46%, var(--hero-edge) 78%);
+}
+
+body.app-v53 .hero-content {
+  max-width: 680px;
+}
+
+body.app-v53 .hero-logo {
+  width: 118px;
+  height: 118px;
+  margin-bottom: 18px;
+}
+
+body.app-v53 .hero h1 {
+  max-width: 620px;
+  font-size: clamp(38px, 10vw, 64px);
+  line-height: .98;
+}
+
+body.app-v53 .hero-text {
+  max-width: 490px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* CATÁLOGO */
+body.app-v53 .catalog-section {
+  width: min(100%, var(--app-max));
+  max-width: var(--app-max);
+  padding: 46px 14px 72px;
+}
+
+body.app-v53 .section-heading {
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+body.app-v53 .section-heading h2 {
+  font-size: clamp(34px, 8vw, 48px);
+}
+
+/* BUSCA SEMPRE VISÍVEL */
+body.app-v53 .catalog-tools {
+  margin-bottom: 16px;
+  display: block;
+}
+
+body.app-v53 .search-toggle {
+  display: none;
+}
+
+body.app-v53 .search-box,
+body.app-v53 .search-box.open {
+  position: static;
+  width: 100%;
+  overflow: visible;
+}
+
+body.app-v53 .search-box input {
+  width: 100%;
+  height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 8px 26px color-mix(in srgb, var(--shadow) 14%, transparent);
+}
+
+body.app-v53 .search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* CHIPS */
+body.app-v53 .filters {
+  gap: 8px;
+  padding: 2px 1px 8px;
+  scroll-snap-type: x proximity;
+}
+
+body.app-v53 .filter {
+  min-height: 38px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  scroll-snap-align: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+body.app-v53 .filter.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--button-text);
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+body.app-v53 .sub-filters {
+  margin-bottom: 18px;
+}
+
+/* GRID */
+body.app-v53 .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--app-gap);
+  align-items: start;
+}
+
+body.app-v53 .product-card {
+  align-self: start;
+  overflow: hidden;
+  border-radius: var(--app-radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--shadow) 18%, transparent);
+  transform: none;
+}
+
+body.app-v53 .product-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 54%, var(--line));
+  transform: translateY(-2px);
+}
+
+body.app-v53 .product-image,
+body.app-v53 .product-card.image-missing::before {
+  aspect-ratio: 1 / 1.08;
+  border-radius: 0;
+}
+
+body.app-v53 .product-image {
+  object-fit: cover;
+}
+
+body.app-v53 .product-info {
+  padding: 12px 11px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+body.app-v53 .availability-tag {
+  margin-bottom: 3px;
+  padding: 5px 7px;
+  font-size: 7px;
+  letter-spacing: .8px;
+}
+
+body.app-v53 .product-name {
+  min-height: 2.1em;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: clamp(18px, 5vw, 22px);
+  line-height: 1.03;
+}
+
+body.app-v53 .product-category {
+  margin: 3px 0 1px;
+  font-size: 9px;
+}
+
+body.app-v53 .product-price {
+  margin-top: 2px;
+  font-size: 15px;
+}
+
+body.app-v53 .product-actions {
+  margin-top: 8px;
+  grid-template-columns: .76fr 1.24fr;
+  gap: 6px;
+}
+
+body.app-v53 .product-details,
+body.app-v53 .product-add {
+  min-height: 40px;
+  padding: 8px 9px;
+  font-size: 8px;
+  letter-spacing: .55px;
+}
+
+body.app-v53 .product-details {
+  color: var(--muted);
+}
+
+body.app-v53 .product-add {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* FALLBACK MAIS ELEGANTE */
+body.app-v53 .product-card.image-missing::before {
+  content: "FOTO EM BREVE";
+  background:
+    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 8%, var(--surface2)), var(--surface2) 62%);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* SOBRE MAIS COMPACTO */
+body.app-v53 .about {
+  padding: 0 14px 54px;
+}
+
+body.app-v53 .about-card {
+  border-radius: var(--app-radius);
+  padding: 42px 22px;
+}
+
+/* BOTTOM NAV */
+.app-bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 90;
+  width: min(calc(100% - 24px), 460px);
+  min-height: 60px;
+  padding: 7px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--shadow) 32%, transparent);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+}
+
+.app-bottom-nav button,
+.app-bottom-nav a {
+  min-width: 0;
+  min-height: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .35px;
+}
+
+.app-bottom-nav .nav-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.app-bottom-nav a:hover,
+.app-bottom-nav button:hover,
+.app-bottom-nav a:focus-visible,
+.app-bottom-nav button:focus-visible {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  outline: none;
+}
+
+.app-nav-cart {
+  position: relative;
+}
+
+.app-nav-count {
+  position: absolute;
+  top: 2px;
+  right: calc(50% - 22px);
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--button-text);
+  font-size: 8px;
+}
+
+.app-nav-count[hidden] {
+  display: none;
+}
+
+@media (max-width: 370px) {
+  body.app-v53 .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.app-v53 .product-info {
+    padding: 15px;
+  }
+
+  body.app-v53 .product-name {
+    min-height: 0;
+    font-size: 23px;
+  }
+}
+
+@media (min-width: 700px) {
+  body.app-v53 {
+    padding-bottom: 0;
+  }
+
+  body.app-v53 .header {
+    padding-inline: 34px;
+  }
+
+  body.app-v53 .hero {
+    padding-block: 56px 46px;
+  }
+
+  body.app-v53 .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body.app-v53 .product-info {
+    padding: 15px;
+  }
+
+  .app-bottom-nav {
+    display: none;
+  }
+}
+
+@media (min-width: 1100px) {
+  body.app-v53 .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.app-v53 .product-card,
+  body.app-v53 .filter,
+  .app-bottom-nav * {
+    transition: none !important;
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .app-bottom-nav {
+    background: var(--surface);
+  }
+}

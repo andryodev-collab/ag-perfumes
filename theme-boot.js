@@ -47,6 +47,11 @@
     priceFilter.href = "price-filter-v534.css";
     document.head.appendChild(priceFilter);
 
+    const availabilityFilter = document.createElement("link");
+    availabilityFilter.rel = "stylesheet";
+    availabilityFilter.href = "availability-filter-v535.css";
+    document.head.appendChild(availabilityFilter);
+
     window.addEventListener("DOMContentLoaded", () => {
       const appScript = document.createElement("script");
       appScript.src = "app-style.js";

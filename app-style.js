@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  document.body.classList.add("app-v53", "app-v532", "app-v534");
+  document.body.classList.add("app-v53", "app-v532", "app-v534", "app-v535");
 
   const productUrl = id => `produto.html?id=${encodeURIComponent(id)}`;
   const productGrid = document.getElementById("productGrid");
@@ -10,6 +10,7 @@
 
   let priceMin = null;
   let priceMax = null;
+  let availabilityFilter = "todos";
 
   // Página própria do produto.
   document.addEventListener(
@@ -232,7 +233,12 @@
     return `${formatMoneyShort(priceMin)} – ${formatMoneyShort(priceMax)}`;
   }
 
-  function applyPriceFilter() {
+  function matchesAvailability(product) {
+    if (availabilityFilter === "todos") return true;
+    return (product?.availability || "pronta_entrega") === availabilityFilter;
+  }
+
+  function applyCombinedFilters() {
     if (!productGrid) return;
 
     const cards = [...productGrid.querySelectorAll(".product-card")];
@@ -248,9 +254,12 @@
       const price = Number(product?.price);
       const passMin = priceMin == null || price >= priceMin;
       const passMax = priceMax == null || price <= priceMax;
-      const show = Number.isFinite(price) && passMin && passMax;
+      const passPrice = Number.isFinite(price) && passMin && passMax;
+      const passAvailability = matchesAvailability(product);
+      const show = passPrice && passAvailability;
 
-      card.hidden = !show;
+      card.hidden = !passPrice;
+      card.dataset.availabilityMatch = String(passAvailability);
       if (show) visible += 1;
     });
 
@@ -266,11 +275,21 @@
       button.classList.toggle("active", min === priceMin && max === priceMax);
     });
 
+    document.querySelectorAll(".app-availability-option").forEach(button => {
+      button.classList.toggle("active", button.dataset.availability === availabilityFilter);
+    });
+
     if (emptyState && cards.length) {
       if (visible) {
         emptyState.style.display = "none";
       } else {
-        emptyState.textContent = "Nenhum produto encontrado nessa faixa de preço.";
+        const hasPrice = priceMin != null || priceMax != null;
+        const hasAvailability = availabilityFilter !== "todos";
+        emptyState.textContent = hasPrice && hasAvailability
+          ? "Nenhum produto encontrado com esses filtros."
+          : hasAvailability
+            ? "Nenhum produto encontrado com essa disponibilidade."
+            : "Nenhum produto encontrado nessa faixa de preço.";
         emptyState.style.display = "block";
       }
     }
@@ -289,7 +308,7 @@
     if (minInput) minInput.value = priceMin ?? "";
     if (maxInput) maxInput.value = priceMax ?? "";
 
-    applyPriceFilter();
+    applyCombinedFilters();
   }
 
   function parsePriceInput(value) {
@@ -378,11 +397,43 @@
     });
   }
 
+  function buildAvailabilityFilter() {
+    if (!catalog || document.getElementById("appAvailabilityFilter")) return;
+
+    const priceFilter = document.getElementById("appPriceFilter");
+    const mainFilters = document.getElementById("mainFilters");
+    const subFilters = document.getElementById("subFilters");
+    const anchor = priceFilter || subFilters || mainFilters;
+    if (!anchor) return;
+
+    const wrap = document.createElement("div");
+    wrap.id = "appAvailabilityFilter";
+    wrap.className = "app-availability-filter";
+    wrap.innerHTML = `
+      <span class="app-availability-label">Disponibilidade</span>
+      <div class="app-availability-options" role="group" aria-label="Filtrar por disponibilidade">
+        <button class="app-availability-option active" type="button" data-availability="todos">Todos</button>
+        <button class="app-availability-option" type="button" data-availability="pronta_entrega">Pronta entrega</button>
+        <button class="app-availability-option" type="button" data-availability="sob_encomenda">Sob encomenda</button>
+      </div>
+    `;
+
+    anchor.insertAdjacentElement("afterend", wrap);
+
+    wrap.querySelectorAll(".app-availability-option").forEach(button => {
+      button.addEventListener("click", () => {
+        availabilityFilter = button.dataset.availability || "todos";
+        applyCombinedFilters();
+      });
+    });
+  }
+
   function refreshEnhancements() {
     normalizeCardLabels();
     buildDiscovery();
     buildPriceFilter();
-    applyPriceFilter();
+    buildAvailabilityFilter();
+    applyCombinedFilters();
   }
 
   if (productGrid) {

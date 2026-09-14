@@ -37,6 +37,11 @@
     appStyle.href = "app-style.css";
     document.head.appendChild(appStyle);
 
+    const heroLockup = document.createElement("link");
+    heroLockup.rel = "stylesheet";
+    heroLockup.href = "hero-v533.css";
+    document.head.appendChild(heroLockup);
+
     window.addEventListener("DOMContentLoaded", () => {
       const appScript = document.createElement("script");
       appScript.src = "app-style.js";

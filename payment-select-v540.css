@@ -1,0 +1,57 @@
+/* ==========================================================
+   AG PERFUMES V5.4.0 — FORMA DE PAGAMENTO EM MENU
+   Mantém os radios originais para compatibilidade com o JS.
+   ========================================================== */
+
+.payment-options-native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+.payment-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.payment-select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 48px 0 15px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  outline: none;
+}
+
+.payment-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
+}
+
+.payment-select-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-54%);
+  color: var(--accent);
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .payment-select {
+    background: var(--surface);
+  }
+}

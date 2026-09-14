@@ -1,0 +1,377 @@
+/* ==========================================================
+   AG PERFUMES V5.3.6 — FILTROS UNIFICADOS
+   Um único painel para preço, disponibilidade, ordenação
+   e destaques. Cores seguem 100% o tema atual.
+   ========================================================== */
+
+.app-filter-bar {
+  margin: 4px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-filter-trigger {
+  min-height: 40px;
+  padding: 9px 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .35px;
+}
+
+.app-filter-trigger:hover,
+.app-filter-trigger:focus-visible,
+.app-filter-trigger.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.app-filter-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.app-filter-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--button-text);
+  font-size: 8px;
+}
+
+.app-filter-count[hidden] {
+  display: none;
+}
+
+.app-filter-summary {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.app-filter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  display: grid;
+  align-items: end;
+  background: var(--overlay);
+}
+
+.app-filter-overlay[hidden] {
+  display: none;
+}
+
+body.filter-open {
+  overflow: hidden;
+}
+
+.app-filter-sheet {
+  width: 100%;
+  max-height: min(88svh, 760px);
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 -18px 46px color-mix(in srgb, var(--shadow) 26%, transparent);
+}
+
+.app-filter-sheet-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 15px 16px 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.app-filter-sheet-head div {
+  min-width: 0;
+}
+
+.app-filter-sheet-head small {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.app-filter-sheet-head h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.app-filter-close {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 20px;
+}
+
+.app-filter-body {
+  padding: 6px 16px 104px;
+}
+
+.app-filter-section {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.app-filter-section:last-child {
+  border-bottom: 0;
+}
+
+.app-filter-section-title {
+  margin: 0 0 11px;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .45px;
+}
+
+.app-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.app-filter-option,
+.app-price-preset-unified {
+  min-height: 36px;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  font: inherit;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.app-filter-option:hover,
+.app-filter-option:focus-visible,
+.app-price-preset-unified:hover,
+.app-price-preset-unified:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.app-filter-option.active,
+.app-price-preset-unified.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--button-text);
+}
+
+.app-filter-price-grid {
+  margin-top: 11px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.app-filter-field {
+  display: grid;
+  gap: 5px;
+}
+
+.app-filter-field span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.app-filter-field input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.app-filter-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.app-filter-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 2px 0;
+}
+
+.app-filter-toggle-copy strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 10px;
+}
+
+.app-filter-toggle-copy span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.app-filter-switch {
+  position: relative;
+  width: 48px;
+  height: 28px;
+  flex: 0 0 48px;
+}
+
+.app-filter-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-filter-switch span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  transition: .2s ease;
+}
+
+.app-filter-switch span::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  left: 3px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: .2s ease;
+}
+
+.app-filter-switch input:checked + span {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 22%, var(--bg));
+}
+
+.app-filter-switch input:checked + span::after {
+  transform: translateX(20px);
+  background: var(--accent);
+}
+
+.app-filter-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  padding: 11px 16px calc(11px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 97%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.app-filter-reset,
+.app-filter-apply {
+  min-height: 46px;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .6px;
+}
+
+.app-filter-reset {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-filter-apply {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--button-text);
+}
+
+@media (min-width: 700px) {
+  .app-filter-bar {
+    margin-bottom: 20px;
+  }
+
+  .app-filter-overlay {
+    place-items: center;
+    padding: 24px;
+  }
+
+  .app-filter-sheet {
+    width: min(100%, 560px);
+    max-height: min(82vh, 720px);
+    border-bottom: 1px solid var(--line);
+    border-radius: 22px;
+  }
+
+  .app-filter-body {
+    padding-inline: 22px;
+  }
+
+  .app-filter-sheet-head,
+  .app-filter-footer {
+    padding-inline: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-filter-switch span,
+  .app-filter-switch span::after {
+    transition: none !important;
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .app-filter-sheet,
+  .app-filter-footer,
+  .app-filter-sheet-head {
+    background: var(--surface);
+  }
+}

@@ -33,7 +33,8 @@
     [
       "app-style.css",
       "hero-v533.css",
-      "unified-filter-v536.css"
+      "unified-filter-v536.css",
+      "storefront-polish-v537.css"
     ].forEach(href => {
       const link = document.createElement("link");
       link.rel = "stylesheet";

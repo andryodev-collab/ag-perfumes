@@ -34,7 +34,8 @@
       "app-style.css",
       "hero-v533.css",
       "unified-filter-v536.css",
-      "storefront-polish-v537.css"
+      "storefront-polish-v537.css",
+      "cart-mobile-fix-v539.css"
     ].forEach(href => {
       const link = document.createElement("link");
       link.rel = "stylesheet";

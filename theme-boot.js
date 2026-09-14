@@ -26,10 +26,12 @@
   root.style.setProperty("--header-bg", tema.header);
   root.style.backgroundColor = tema.bg;
 
-  // V5.3 preview: injeta a camada visual sem alterar a V5.2 de produção.
-  const isProductPage = /(^|\/)produto\.html$/i.test(location.pathname);
+  // V5.3 preview: ativa somente na vitrine principal.
+  // Admin, painel e página de produto continuam independentes.
+  const path = location.pathname.toLowerCase();
+  const isStorefront = path.endsWith("/") || path.endsWith("/index.html");
 
-  if (!isProductPage) {
+  if (isStorefront) {
     const appStyle = document.createElement("link");
     appStyle.rel = "stylesheet";
     appStyle.href = "app-style.css";

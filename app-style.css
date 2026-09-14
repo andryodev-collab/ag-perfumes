@@ -1,89 +1,168 @@
 /* ==========================================================
-   AG PERFUMES V5.3 — APP STYLE PREVIEW
-   Camada visual sobre a V5.2 estável.
-   Mantém 100% das cores vindas do sistema de temas.
+   AG PERFUMES V5.3.1 — APP STYLE PREVIEW
+   Refinamento visual baseado na referência mobile enviada.
+   Cores seguem 100% o sistema atual de temas.
    ========================================================== */
 
 :root {
   --app-max: 1180px;
-  --app-radius: 22px;
-  --app-radius-sm: 16px;
-  --app-gap: clamp(12px, 2vw, 20px);
+  --app-radius: 20px;
+  --app-radius-sm: 14px;
+  --app-gap: clamp(12px, 2vw, 18px);
 }
 
 body.app-v53 {
-  padding-bottom: calc(78px + env(safe-area-inset-bottom));
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
 }
 
+/* HEADER — menu à esquerda, marca central, sacola à direita */
 body.app-v53 .header {
-  height: 68px;
-  padding: 0 16px;
-  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  height: 64px;
+  padding: 0 14px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 46px;
+  align-items: center;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--line);
   box-shadow: none;
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+}
+
+body.app-v53 .header .brand {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  min-width: 0;
+  margin: 0;
+  gap: 8px;
+}
+
+body.app-v53 .header-actions {
+  display: contents;
+}
+
+body.app-v53 .menu-button {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  width: 42px;
+  height: 42px;
+  margin: 0;
+}
+
+body.app-v53 .cart-button {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  width: 42px;
+  height: 42px;
+  margin: 0;
 }
 
 body.app-v53 .brand-name {
-  font-size: 18px;
-  letter-spacing: .2px;
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  letter-spacing: .1px;
 }
 
 body.app-v53 .header-logo,
 body.app-v53 .header-logo img {
-  width: 40px;
-  height: 40px;
-  max-width: 40px;
-  max-height: 40px;
+  width: 30px;
+  height: 30px;
+  max-width: 30px;
+  max-height: 30px;
 }
 
-/* HERO COM CARA DE BANNER/APP */
+/* HERO — deixa de ocupar quase a tela inteira e vira banner promocional */
 body.app-v53 .hero {
-  min-height: auto;
-  padding: 42px 18px 34px;
+  width: min(calc(100% - 24px), var(--app-max));
+  min-height: 0;
+  margin: 14px auto 26px;
+  padding: 26px 24px 28px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
   background:
-    radial-gradient(circle at 50% 18%, var(--hero-center), var(--hero-middle) 46%, var(--hero-edge) 78%);
+    radial-gradient(circle at 80% 20%, var(--hero-center), transparent 43%),
+    linear-gradient(135deg, var(--hero-middle), var(--hero-edge));
+  box-shadow: 0 14px 36px color-mix(in srgb, var(--shadow) 16%, transparent);
+}
+
+body.app-v53 .hero-glow {
+  opacity: .45;
 }
 
 body.app-v53 .hero-content {
-  max-width: 680px;
+  max-width: 560px;
+  margin: 0;
+  align-items: flex-start;
+  text-align: left;
 }
 
 body.app-v53 .hero-logo {
-  width: 118px;
-  height: 118px;
-  margin-bottom: 18px;
+  width: 64px;
+  height: 64px;
+  margin: 0 0 16px;
 }
 
 body.app-v53 .hero h1 {
-  max-width: 620px;
-  font-size: clamp(38px, 10vw, 64px);
+  max-width: 450px;
+  margin-bottom: 12px;
+  font-size: clamp(34px, 8.5vw, 48px);
   line-height: .98;
 }
 
 body.app-v53 .hero-text {
-  max-width: 490px;
-  margin-bottom: 24px;
-  font-size: 14px;
+  max-width: 430px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+body.app-v53 .hero .primary-button {
+  min-height: 44px;
+  padding: 11px 18px;
+  font-size: 9px;
 }
 
 /* CATÁLOGO */
 body.app-v53 .catalog-section {
   width: min(100%, var(--app-max));
   max-width: var(--app-max);
-  padding: 46px 14px 72px;
+  padding: 0 14px 96px;
 }
 
 body.app-v53 .section-heading {
-  margin-bottom: 22px;
+  margin-bottom: 18px;
   text-align: left;
 }
 
-body.app-v53 .section-heading h2 {
-  font-size: clamp(34px, 8vw, 48px);
+body.app-v53 .section-heading .eyebrow {
+  margin-bottom: 6px;
+  font-size: 9px;
+  letter-spacing: 2.2px;
 }
 
-/* BUSCA SEMPRE VISÍVEL */
+body.app-v53 .section-heading h2 {
+  margin-bottom: 5px;
+  font-size: clamp(30px, 7vw, 42px);
+  line-height: 1;
+}
+
+body.app-v53 .section-heading > p:last-child {
+  font-size: 12px;
+}
+
+/* BUSCA */
 body.app-v53 .catalog-tools {
-  margin-bottom: 16px;
+  margin: 0 0 14px;
   display: block;
 }
 
@@ -100,37 +179,37 @@ body.app-v53 .search-box.open {
 
 body.app-v53 .search-box input {
   width: 100%;
-  height: 48px;
-  padding: 0 18px;
+  height: 46px;
+  padding: 0 17px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--surface);
   color: var(--text);
   outline: none;
-  box-shadow: 0 8px 26px color-mix(in srgb, var(--shadow) 14%, transparent);
+  box-shadow: none;
 }
 
 body.app-v53 .search-box input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 11%, transparent);
 }
 
 /* CHIPS */
 body.app-v53 .filters {
   gap: 8px;
-  padding: 2px 1px 8px;
+  padding: 2px 0 8px;
   scroll-snap-type: x proximity;
 }
 
 body.app-v53 .filter {
-  min-height: 38px;
-  padding: 9px 14px;
-  border-radius: 999px;
+  min-height: 36px;
+  padding: 8px 13px;
+  border-radius: 12px;
   scroll-snap-align: start;
   background: var(--surface);
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
 }
 
@@ -138,11 +217,11 @@ body.app-v53 .filter.active {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--button-text);
-  box-shadow: 0 7px 18px color-mix(in srgb, var(--accent) 16%, transparent);
+  box-shadow: none;
 }
 
 body.app-v53 .sub-filters {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 /* GRID */
@@ -158,18 +237,18 @@ body.app-v53 .product-card {
   border-radius: var(--app-radius);
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: 0 12px 30px color-mix(in srgb, var(--shadow) 18%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--shadow) 11%, transparent);
   transform: none;
 }
 
 body.app-v53 .product-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 54%, var(--line));
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
   transform: translateY(-2px);
 }
 
 body.app-v53 .product-image,
 body.app-v53 .product-card.image-missing::before {
-  aspect-ratio: 1 / 1.08;
+  aspect-ratio: 1 / 1.06;
   border-radius: 0;
 }
 
@@ -178,31 +257,32 @@ body.app-v53 .product-image {
 }
 
 body.app-v53 .product-info {
-  padding: 12px 11px 13px;
+  padding: 11px 10px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 body.app-v53 .availability-tag {
-  margin-bottom: 3px;
+  width: fit-content;
+  margin-bottom: 2px;
   padding: 5px 7px;
   font-size: 7px;
-  letter-spacing: .8px;
+  letter-spacing: .7px;
 }
 
 body.app-v53 .product-name {
-  min-height: 2.1em;
+  min-height: 2.06em;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  font-size: clamp(18px, 5vw, 22px);
+  font-size: clamp(17px, 4.6vw, 21px);
   line-height: 1.03;
 }
 
 body.app-v53 .product-category {
-  margin: 3px 0 1px;
+  margin: 2px 0 0;
   font-size: 9px;
 }
 
@@ -213,16 +293,16 @@ body.app-v53 .product-price {
 
 body.app-v53 .product-actions {
   margin-top: 8px;
-  grid-template-columns: .76fr 1.24fr;
+  grid-template-columns: .78fr 1.22fr;
   gap: 6px;
 }
 
 body.app-v53 .product-details,
 body.app-v53 .product-add {
-  min-height: 40px;
-  padding: 8px 9px;
-  font-size: 8px;
-  letter-spacing: .55px;
+  min-height: 38px;
+  padding: 7px 8px;
+  font-size: 7.8px;
+  letter-spacing: .45px;
 }
 
 body.app-v53 .product-details {
@@ -234,7 +314,6 @@ body.app-v53 .product-add {
   color: var(--accent);
 }
 
-/* FALLBACK MAIS ELEGANTE */
 body.app-v53 .product-card.image-missing::before {
   content: "FOTO EM BREVE";
   background:
@@ -243,54 +322,53 @@ body.app-v53 .product-card.image-missing::before {
   font-weight: 700;
 }
 
-/* SOBRE MAIS COMPACTO */
+/* SOBRE */
 body.app-v53 .about {
   padding: 0 14px 54px;
 }
 
 body.app-v53 .about-card {
   border-radius: var(--app-radius);
-  padding: 42px 22px;
+  padding: 38px 22px;
 }
 
-/* BOTTOM NAV */
+/* BOTTOM NAV — mais próximo da referência, sem flutuar sobre o conteúdo */
 .app-bottom-nav {
   position: fixed;
-  left: 50%;
-  bottom: max(10px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 90;
-  width: min(calc(100% - 24px), 460px);
-  min-height: 60px;
-  padding: 7px;
+  width: 100%;
+  min-height: 62px;
+  padding: 6px 18px calc(6px + env(safe-area-inset-bottom));
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  transform: translateX(-50%);
-  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
-  border-radius: 22px;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  box-shadow: 0 18px 46px color-mix(in srgb, var(--shadow) 32%, transparent);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: 0 -10px 30px color-mix(in srgb, var(--shadow) 14%, transparent);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
 }
 
 .app-bottom-nav button,
 .app-bottom-nav a {
   min-width: 0;
-  min-height: 46px;
+  min-height: 48px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 12px;
   background: transparent;
   color: var(--muted);
   font: inherit;
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: .35px;
+  letter-spacing: .25px;
 }
 
 .app-bottom-nav .nav-icon {
@@ -302,7 +380,7 @@ body.app-v53 .about-card {
 .app-bottom-nav button:hover,
 .app-bottom-nav a:focus-visible,
 .app-bottom-nav button:focus-visible {
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
   color: var(--accent);
   outline: none;
 }
@@ -313,8 +391,8 @@ body.app-v53 .about-card {
 
 .app-nav-count {
   position: absolute;
-  top: 2px;
-  right: calc(50% - 22px);
+  top: 1px;
+  right: calc(50% - 21px);
   min-width: 17px;
   height: 17px;
   padding: 0 4px;
@@ -336,12 +414,12 @@ body.app-v53 .about-card {
   }
 
   body.app-v53 .product-info {
-    padding: 15px;
+    padding: 14px;
   }
 
   body.app-v53 .product-name {
     min-height: 0;
-    font-size: 23px;
+    font-size: 22px;
   }
 }
 
@@ -351,11 +429,21 @@ body.app-v53 .about-card {
   }
 
   body.app-v53 .header {
-    padding-inline: 34px;
+    padding-inline: 28px;
   }
 
   body.app-v53 .hero {
-    padding-block: 56px 46px;
+    margin-top: 22px;
+    padding: 36px 38px 38px;
+  }
+
+  body.app-v53 .hero-logo {
+    width: 78px;
+    height: 78px;
+  }
+
+  body.app-v53 .catalog-section {
+    padding-inline: 22px;
   }
 
   body.app-v53 .product-grid {
@@ -363,7 +451,7 @@ body.app-v53 .about-card {
   }
 
   body.app-v53 .product-info {
-    padding: 15px;
+    padding: 14px;
   }
 
   .app-bottom-nav {

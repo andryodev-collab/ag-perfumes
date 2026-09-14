@@ -42,6 +42,11 @@
     heroLockup.href = "hero-v533.css";
     document.head.appendChild(heroLockup);
 
+    const priceFilter = document.createElement("link");
+    priceFilter.rel = "stylesheet";
+    priceFilter.href = "price-filter-v534.css";
+    document.head.appendChild(priceFilter);
+
     window.addEventListener("DOMContentLoaded", () => {
       const appScript = document.createElement("script");
       appScript.src = "app-style.js";

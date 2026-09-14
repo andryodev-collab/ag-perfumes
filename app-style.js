@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  document.body.classList.add("app-v53", "app-v532", "app-v534", "app-v535");
+  document.body.classList.add("app-v53", "app-v536");
 
   const productUrl = id => `produto.html?id=${encodeURIComponent(id)}`;
   const productGrid = document.getElementById("productGrid");
@@ -11,8 +11,15 @@
   let priceMin = null;
   let priceMax = null;
   let availabilityFilter = "todos";
+  let featuredOnly = false;
+  let sortMode = "featured";
 
-  // Página própria do produto.
+  let draftPriceMin = null;
+  let draftPriceMax = null;
+  let draftAvailability = "todos";
+  let draftFeaturedOnly = false;
+  let draftSortMode = "featured";
+
   document.addEventListener(
     "click",
     event => {
@@ -35,7 +42,6 @@
     true
   );
 
-  // Navegação inferior estilo app.
   const nav = document.createElement("nav");
   nav.className = "app-bottom-nav";
   nav.setAttribute("aria-label", "Navegação rápida");
@@ -143,9 +149,7 @@
 
     const preferred = ["masculino", "feminino", "unissex", "bodysplash"];
     const categories = [
-      ...preferred
-        .map(key => configured.find(item => item.value === key))
-        .filter(Boolean),
+      ...preferred.map(key => configured.find(item => item.value === key)).filter(Boolean),
       ...configured.filter(item => !preferred.includes(item.value))
     ].slice(0, 6);
 
@@ -212,234 +216,322 @@
     catalog.parentNode.insertBefore(section, catalog);
 
     section.querySelectorAll("[data-app-main][data-app-sub]").forEach(button => {
-      button.addEventListener("click", () => {
-        clickCategory(button.dataset.appMain, button.dataset.appSub);
-      });
+      button.addEventListener("click", () => clickCategory(button.dataset.appMain, button.dataset.appSub));
     });
   }
 
-  function formatMoneyShort(value) {
-    return Number(value).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      maximumFractionDigits: 0
-    });
+  function parsePriceInput(value) {
+    const normalized = String(value || "").replace(/[^0-9,.-]/g, "").replace(",", ".");
+    const number = Number(normalized);
+    return Number.isFinite(number) ? Math.max(0, number) : null;
   }
 
-  function currentPriceSummary() {
-    if (priceMin == null && priceMax == null) return "Todos os preços";
-    if (priceMin == null) return `Até ${formatMoneyShort(priceMax)}`;
-    if (priceMax == null) return `Acima de ${formatMoneyShort(priceMin)}`;
-    return `${formatMoneyShort(priceMin)} – ${formatMoneyShort(priceMax)}`;
+  function countActiveFilters() {
+    let total = 0;
+    if (priceMin != null || priceMax != null) total += 1;
+    if (availabilityFilter !== "todos") total += 1;
+    if (featuredOnly) total += 1;
+    if (sortMode !== "featured") total += 1;
+    return total;
   }
 
-  function matchesAvailability(product) {
-    if (availabilityFilter === "todos") return true;
-    return (product?.availability || "pronta_entrega") === availabilityFilter;
+  function filterSummary() {
+    const parts = [];
+    if (availabilityFilter === "pronta_entrega") parts.push("Pronta entrega");
+    if (availabilityFilter === "sob_encomenda") parts.push("Sob encomenda");
+    if (priceMin != null || priceMax != null) parts.push("Preço");
+    if (featuredOnly) parts.push("Destaques");
+    if (sortMode === "price_asc") parts.push("Menor preço");
+    if (sortMode === "price_desc") parts.push("Maior preço");
+    if (sortMode === "name_asc") parts.push("A–Z");
+    return parts.length ? parts.join(" • ") : "Todos os produtos";
   }
 
-  function applyCombinedFilters() {
+  function updateFilterTrigger() {
+    const count = countActiveFilters();
+    const countEl = document.getElementById("appFilterCount");
+    const summary = document.getElementById("appFilterSummary");
+    const trigger = document.getElementById("appFilterTrigger");
+
+    if (countEl) {
+      countEl.textContent = String(count);
+      countEl.hidden = count === 0;
+    }
+    if (summary) summary.textContent = filterSummary();
+    trigger?.classList.toggle("is-active", count > 0);
+  }
+
+  function applyUnifiedFilters() {
     if (!productGrid) return;
 
     const cards = [...productGrid.querySelectorAll(".product-card")];
-    let visible = 0;
+    const visibleCards = [];
 
     cards.forEach(card => {
       const id = Number(card.dataset.id);
       let product = null;
-      try {
-        product = products.find(item => Number(item.id) === id);
-      } catch (_) {}
+      try { product = products.find(item => Number(item.id) === id); } catch (_) {}
 
       const price = Number(product?.price);
-      const passMin = priceMin == null || price >= priceMin;
-      const passMax = priceMax == null || price <= priceMax;
-      const passPrice = Number.isFinite(price) && passMin && passMax;
-      const passAvailability = matchesAvailability(product);
-      const show = passPrice && passAvailability;
+      const passPrice = Number.isFinite(price)
+        && (priceMin == null || price >= priceMin)
+        && (priceMax == null || price <= priceMax);
+      const availability = product?.availability || "pronta_entrega";
+      const passAvailability = availabilityFilter === "todos" || availability === availabilityFilter;
+      const passFeatured = !featuredOnly || Boolean(product?.destaque);
+      const show = passPrice && passAvailability && passFeatured;
 
-      card.hidden = !passPrice;
-      card.dataset.availabilityMatch = String(passAvailability);
-      if (show) visible += 1;
+      card.hidden = !show;
+      if (show) visibleCards.push({ card, product });
     });
 
-    const summary = document.getElementById("appPriceSummary");
-    if (summary) summary.textContent = currentPriceSummary();
+    const compare = {
+      featured: (a, b) => Number(Boolean(b.product?.destaque)) - Number(Boolean(a.product?.destaque)),
+      price_asc: (a, b) => Number(a.product?.price || 0) - Number(b.product?.price || 0),
+      price_desc: (a, b) => Number(b.product?.price || 0) - Number(a.product?.price || 0),
+      name_asc: (a, b) => String(a.product?.name || "").localeCompare(String(b.product?.name || ""), "pt-BR")
+    }[sortMode] || (() => 0);
 
-    const clear = document.getElementById("appPriceClear");
-    if (clear) clear.hidden = priceMin == null && priceMax == null;
-
-    document.querySelectorAll(".app-price-preset").forEach(button => {
-      const min = button.dataset.min === "" ? null : Number(button.dataset.min);
-      const max = button.dataset.max === "" ? null : Number(button.dataset.max);
-      button.classList.toggle("active", min === priceMin && max === priceMax);
-    });
-
-    document.querySelectorAll(".app-availability-option").forEach(button => {
-      button.classList.toggle("active", button.dataset.availability === availabilityFilter);
-    });
+    visibleCards.sort(compare).forEach(({ card }) => productGrid.appendChild(card));
 
     if (emptyState && cards.length) {
-      if (visible) {
+      if (visibleCards.length) {
         emptyState.style.display = "none";
       } else {
-        const hasPrice = priceMin != null || priceMax != null;
-        const hasAvailability = availabilityFilter !== "todos";
-        emptyState.textContent = hasPrice && hasAvailability
-          ? "Nenhum produto encontrado com esses filtros."
-          : hasAvailability
-            ? "Nenhum produto encontrado com essa disponibilidade."
-            : "Nenhum produto encontrado nessa faixa de preço.";
+        emptyState.textContent = "Nenhum produto encontrado com os filtros selecionados.";
         emptyState.style.display = "block";
       }
     }
+
+    updateFilterTrigger();
   }
 
-  function setPriceRange(min, max) {
-    priceMin = Number.isFinite(min) ? Math.max(0, min) : null;
-    priceMax = Number.isFinite(max) ? Math.max(0, max) : null;
+  function syncDraftUI() {
+    document.querySelectorAll("[data-filter-availability]").forEach(button => {
+      button.classList.toggle("active", button.dataset.filterAvailability === draftAvailability);
+    });
 
-    if (priceMin != null && priceMax != null && priceMin > priceMax) {
-      [priceMin, priceMax] = [priceMax, priceMin];
+    document.querySelectorAll("[data-filter-sort]").forEach(button => {
+      button.classList.toggle("active", button.dataset.filterSort === draftSortMode);
+    });
+
+    document.querySelectorAll(".app-price-preset-unified").forEach(button => {
+      const min = button.dataset.min === "" ? null : Number(button.dataset.min);
+      const max = button.dataset.max === "" ? null : Number(button.dataset.max);
+      button.classList.toggle("active", min === draftPriceMin && max === draftPriceMax);
+    });
+
+    const minInput = document.getElementById("appUnifiedPriceMin");
+    const maxInput = document.getElementById("appUnifiedPriceMax");
+    const featuredInput = document.getElementById("appFeaturedOnly");
+    if (minInput) minInput.value = draftPriceMin ?? "";
+    if (maxInput) maxInput.value = draftPriceMax ?? "";
+    if (featuredInput) featuredInput.checked = draftFeaturedOnly;
+  }
+
+  function openFilterSheet() {
+    draftPriceMin = priceMin;
+    draftPriceMax = priceMax;
+    draftAvailability = availabilityFilter;
+    draftFeaturedOnly = featuredOnly;
+    draftSortMode = sortMode;
+    syncDraftUI();
+
+    const overlay = document.getElementById("appFilterOverlay");
+    overlay.hidden = false;
+    document.body.classList.add("filter-open");
+    document.getElementById("appFilterTrigger")?.setAttribute("aria-expanded", "true");
+    window.requestAnimationFrame(() => document.getElementById("appFilterClose")?.focus());
+  }
+
+  function closeFilterSheet() {
+    const overlay = document.getElementById("appFilterOverlay");
+    if (overlay) overlay.hidden = true;
+    document.body.classList.remove("filter-open");
+    document.getElementById("appFilterTrigger")?.setAttribute("aria-expanded", "false");
+  }
+
+  function applyDraftFilters() {
+    const minInput = document.getElementById("appUnifiedPriceMin");
+    const maxInput = document.getElementById("appUnifiedPriceMax");
+    draftPriceMin = parsePriceInput(minInput?.value);
+    draftPriceMax = parsePriceInput(maxInput?.value);
+
+    if (draftPriceMin != null && draftPriceMax != null && draftPriceMin > draftPriceMax) {
+      [draftPriceMin, draftPriceMax] = [draftPriceMax, draftPriceMin];
     }
 
-    const minInput = document.getElementById("appPriceMin");
-    const maxInput = document.getElementById("appPriceMax");
-    if (minInput) minInput.value = priceMin ?? "";
-    if (maxInput) maxInput.value = priceMax ?? "";
+    priceMin = draftPriceMin;
+    priceMax = draftPriceMax;
+    availabilityFilter = draftAvailability;
+    featuredOnly = draftFeaturedOnly;
+    sortMode = draftSortMode;
 
-    applyCombinedFilters();
+    applyUnifiedFilters();
+    closeFilterSheet();
   }
 
-  function parsePriceInput(value) {
-    const normalized = String(value || "")
-      .replace(/[^0-9,.-]/g, "")
-      .replace(",", ".");
-    const number = Number(normalized);
-    return Number.isFinite(number) ? number : null;
+  function clearAllFilters() {
+    draftPriceMin = null;
+    draftPriceMax = null;
+    draftAvailability = "todos";
+    draftFeaturedOnly = false;
+    draftSortMode = "featured";
+    syncDraftUI();
   }
 
-  function buildPriceFilter() {
-    if (!catalog || document.getElementById("appPriceFilter")) return;
+  function buildUnifiedFilter() {
+    if (!catalog || document.getElementById("appUnifiedFilter")) return;
+
+    document.getElementById("appPriceFilter")?.remove();
+    document.getElementById("appAvailabilityFilter")?.remove();
 
     const mainFilters = document.getElementById("mainFilters");
     const subFilters = document.getElementById("subFilters");
     const anchor = subFilters || mainFilters;
     if (!anchor) return;
 
-    const wrap = document.createElement("div");
-    wrap.id = "appPriceFilter";
-    wrap.className = "app-price-filter";
-    wrap.innerHTML = `
-      <div class="app-price-toolbar">
-        <button class="app-price-toggle" id="appPriceToggle" type="button" aria-expanded="false" aria-controls="appPricePanel">
-          <span class="price-filter-icon" aria-hidden="true">↕</span>
-          <span>Preço</span>
-          <span class="price-filter-summary" id="appPriceSummary">Todos os preços</span>
-        </button>
-        <button class="app-price-clear" id="appPriceClear" type="button" hidden>Limpar</button>
-      </div>
-
-      <div class="app-price-panel" id="appPricePanel" hidden>
-        <p class="app-price-panel-title">Filtrar por faixa de preço</p>
-        <div class="app-price-presets" aria-label="Faixas rápidas de preço">
-          <button class="app-price-preset" type="button" data-min="" data-max="150">Até R$ 150</button>
-          <button class="app-price-preset" type="button" data-min="150" data-max="300">R$ 150–300</button>
-          <button class="app-price-preset" type="button" data-min="300" data-max="500">R$ 300–500</button>
-          <button class="app-price-preset" type="button" data-min="500" data-max="">R$ 500+</button>
-        </div>
-
-        <div class="app-price-custom">
-          <label class="app-price-field">
-            <span>Mínimo</span>
-            <input id="appPriceMin" type="number" inputmode="decimal" min="0" step="10" placeholder="R$ 0">
-          </label>
-          <label class="app-price-field">
-            <span>Máximo</span>
-            <input id="appPriceMax" type="number" inputmode="decimal" min="0" step="10" placeholder="Sem limite">
-          </label>
-          <button class="app-price-apply" id="appPriceApply" type="button">APLICAR FAIXA</button>
-        </div>
-      </div>
+    const bar = document.createElement("div");
+    bar.id = "appUnifiedFilter";
+    bar.className = "app-filter-bar";
+    bar.innerHTML = `
+      <button class="app-filter-trigger" id="appFilterTrigger" type="button" aria-expanded="false" aria-controls="appFilterOverlay">
+        <span class="app-filter-icon" aria-hidden="true">☷</span>
+        <span>Filtrar e ordenar</span>
+        <span class="app-filter-count" id="appFilterCount" hidden>0</span>
+      </button>
+      <span class="app-filter-summary" id="appFilterSummary">Todos os produtos</span>
     `;
+    anchor.insertAdjacentElement("afterend", bar);
 
-    anchor.insertAdjacentElement("afterend", wrap);
+    const overlay = document.createElement("div");
+    overlay.id = "appFilterOverlay";
+    overlay.className = "app-filter-overlay";
+    overlay.hidden = true;
+    overlay.innerHTML = `
+      <section class="app-filter-sheet" role="dialog" aria-modal="true" aria-labelledby="appFilterTitle">
+        <header class="app-filter-sheet-head">
+          <div>
+            <small>CATÁLOGO</small>
+            <h3 id="appFilterTitle">Filtrar e ordenar</h3>
+          </div>
+          <button class="app-filter-close" id="appFilterClose" type="button" aria-label="Fechar filtros">×</button>
+        </header>
 
-    const toggle = document.getElementById("appPriceToggle");
-    const panel = document.getElementById("appPricePanel");
-    const clear = document.getElementById("appPriceClear");
-    const apply = document.getElementById("appPriceApply");
+        <div class="app-filter-body">
+          <section class="app-filter-section">
+            <h4 class="app-filter-section-title">Disponibilidade</h4>
+            <div class="app-filter-options">
+              <button class="app-filter-option" type="button" data-filter-availability="todos">Todos</button>
+              <button class="app-filter-option" type="button" data-filter-availability="pronta_entrega">Pronta entrega</button>
+              <button class="app-filter-option" type="button" data-filter-availability="sob_encomenda">Sob encomenda</button>
+            </div>
+          </section>
 
-    toggle?.addEventListener("click", () => {
-      const open = panel?.hidden ?? true;
-      if (panel) panel.hidden = !open;
-      toggle.setAttribute("aria-expanded", String(open));
+          <section class="app-filter-section">
+            <h4 class="app-filter-section-title">Preço</h4>
+            <div class="app-filter-options">
+              <button class="app-price-preset-unified" type="button" data-min="" data-max="150">Até R$ 150</button>
+              <button class="app-price-preset-unified" type="button" data-min="150" data-max="300">R$ 150–300</button>
+              <button class="app-price-preset-unified" type="button" data-min="300" data-max="500">R$ 300–500</button>
+              <button class="app-price-preset-unified" type="button" data-min="500" data-max="">R$ 500+</button>
+            </div>
+            <div class="app-filter-price-grid">
+              <label class="app-filter-field">
+                <span>Mínimo</span>
+                <input id="appUnifiedPriceMin" type="number" inputmode="decimal" min="0" step="10" placeholder="R$ 0">
+              </label>
+              <label class="app-filter-field">
+                <span>Máximo</span>
+                <input id="appUnifiedPriceMax" type="number" inputmode="decimal" min="0" step="10" placeholder="Sem limite">
+              </label>
+            </div>
+          </section>
+
+          <section class="app-filter-section">
+            <h4 class="app-filter-section-title">Ordenar por</h4>
+            <div class="app-filter-options">
+              <button class="app-filter-option" type="button" data-filter-sort="featured">Destaques primeiro</button>
+              <button class="app-filter-option" type="button" data-filter-sort="price_asc">Menor preço</button>
+              <button class="app-filter-option" type="button" data-filter-sort="price_desc">Maior preço</button>
+              <button class="app-filter-option" type="button" data-filter-sort="name_asc">Nome A–Z</button>
+            </div>
+          </section>
+
+          <section class="app-filter-section">
+            <div class="app-filter-toggle-row">
+              <div class="app-filter-toggle-copy">
+                <strong>Somente destaques</strong>
+                <span>Mostrar apenas produtos marcados como destaque.</span>
+              </div>
+              <label class="app-filter-switch">
+                <input id="appFeaturedOnly" type="checkbox">
+                <span aria-hidden="true"></span>
+              </label>
+            </div>
+          </section>
+        </div>
+
+        <footer class="app-filter-footer">
+          <button class="app-filter-reset" id="appFilterReset" type="button">LIMPAR TUDO</button>
+          <button class="app-filter-apply" id="appFilterApply" type="button">APLICAR FILTROS</button>
+        </footer>
+      </section>
+    `;
+    document.body.appendChild(overlay);
+
+    document.getElementById("appFilterTrigger")?.addEventListener("click", openFilterSheet);
+    document.getElementById("appFilterClose")?.addEventListener("click", closeFilterSheet);
+    document.getElementById("appFilterApply")?.addEventListener("click", applyDraftFilters);
+    document.getElementById("appFilterReset")?.addEventListener("click", clearAllFilters);
+
+    overlay.addEventListener("click", event => {
+      if (event.target === overlay) closeFilterSheet();
     });
 
-    clear?.addEventListener("click", () => {
-      setPriceRange(null, null);
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !overlay.hidden) closeFilterSheet();
     });
 
-    wrap.querySelectorAll(".app-price-preset").forEach(button => {
+    overlay.querySelectorAll("[data-filter-availability]").forEach(button => {
       button.addEventListener("click", () => {
-        const min = button.dataset.min === "" ? null : Number(button.dataset.min);
-        const max = button.dataset.max === "" ? null : Number(button.dataset.max);
-        setPriceRange(min, max);
+        draftAvailability = button.dataset.filterAvailability || "todos";
+        syncDraftUI();
       });
     });
 
-    apply?.addEventListener("click", () => {
-      const min = parsePriceInput(document.getElementById("appPriceMin")?.value);
-      const max = parsePriceInput(document.getElementById("appPriceMax")?.value);
-      setPriceRange(min, max);
-      if (panel) panel.hidden = true;
-      toggle?.setAttribute("aria-expanded", "false");
-    });
-  }
-
-  function buildAvailabilityFilter() {
-    if (!catalog || document.getElementById("appAvailabilityFilter")) return;
-
-    const priceFilter = document.getElementById("appPriceFilter");
-    const mainFilters = document.getElementById("mainFilters");
-    const subFilters = document.getElementById("subFilters");
-    const anchor = priceFilter || subFilters || mainFilters;
-    if (!anchor) return;
-
-    const wrap = document.createElement("div");
-    wrap.id = "appAvailabilityFilter";
-    wrap.className = "app-availability-filter";
-    wrap.innerHTML = `
-      <span class="app-availability-label">Disponibilidade</span>
-      <div class="app-availability-options" role="group" aria-label="Filtrar por disponibilidade">
-        <button class="app-availability-option active" type="button" data-availability="todos">Todos</button>
-        <button class="app-availability-option" type="button" data-availability="pronta_entrega">Pronta entrega</button>
-        <button class="app-availability-option" type="button" data-availability="sob_encomenda">Sob encomenda</button>
-      </div>
-    `;
-
-    anchor.insertAdjacentElement("afterend", wrap);
-
-    wrap.querySelectorAll(".app-availability-option").forEach(button => {
+    overlay.querySelectorAll("[data-filter-sort]").forEach(button => {
       button.addEventListener("click", () => {
-        availabilityFilter = button.dataset.availability || "todos";
-        applyCombinedFilters();
+        draftSortMode = button.dataset.filterSort || "featured";
+        syncDraftUI();
       });
     });
+
+    overlay.querySelectorAll(".app-price-preset-unified").forEach(button => {
+      button.addEventListener("click", () => {
+        draftPriceMin = button.dataset.min === "" ? null : Number(button.dataset.min);
+        draftPriceMax = button.dataset.max === "" ? null : Number(button.dataset.max);
+        syncDraftUI();
+      });
+    });
+
+    document.getElementById("appFeaturedOnly")?.addEventListener("change", event => {
+      draftFeaturedOnly = Boolean(event.target.checked);
+    });
+
+    syncDraftUI();
+    updateFilterTrigger();
   }
 
   function refreshEnhancements() {
     normalizeCardLabels();
     buildDiscovery();
-    buildPriceFilter();
-    buildAvailabilityFilter();
-    applyCombinedFilters();
+    buildUnifiedFilter();
+    applyUnifiedFilters();
   }
 
   if (productGrid) {
-    const observer = new MutationObserver(() => {
-      refreshEnhancements();
-    });
+    const observer = new MutationObserver(refreshEnhancements);
     observer.observe(productGrid, { childList: true });
   }
 

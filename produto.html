@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" id="themeColorMeta" content="#080808">
+  <title>Produto | Catálogo</title>
+  <meta id="metaDescription" name="description" content="Detalhes do produto.">
+  <link id="dynamicFavicon" rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="theme-boot.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="produto.css">
+  <link rel="stylesheet" href="produto-polish-v538.css">
+</head>
+<body class="product-page product-page-v532">
+  <header class="product-topbar">
+    <button class="product-nav-button" id="productBack" type="button" aria-label="Voltar para a página anterior">
+      <span aria-hidden="true">←</span>
+      <span>Voltar</span>
+    </button>
+
+    <a class="product-brand" href="index.html" id="productBrand" aria-label="Ir para o início">
+      <span class="product-brand-logo logo-slot">
+        <img id="productLogo" alt="Logo da loja" hidden>
+      </span>
+      <strong id="productStoreName">MINHA LOJA</strong>
+    </a>
+
+    <a class="product-nav-button product-home" href="index.html" aria-label="Ir para o início">
+      <span aria-hidden="true">⌂</span>
+      <span>Início</span>
+    </a>
+  </header>
+
+  <main class="product-detail-shell" id="productContent" hidden>
+    <section class="product-detail-media">
+      <div class="product-detail-image-wrap" id="productImageWrap">
+        <img id="productImage" alt="" loading="eager">
+        <button class="product-share" id="productShare" type="button" aria-label="Compartilhar produto">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 4v11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="m8.5 7.5 3.5-3.5 3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.5 10.5H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6.5a2 2 0 0 0-2-2h-1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="product-image-note" aria-hidden="true">
+        <span class="active"></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section class="product-detail-info">
+      <div class="product-meta-row">
+        <p class="eyebrow" id="productCategory"></p>
+        <span class="availability-tag" id="productAvailability"></span>
+      </div>
+      <h1 id="productName">Produto</h1>
+      <p class="product-detail-price" id="productPrice">R$ 0,00</p>
+      <p class="product-detail-description" id="productDescription"></p>
+
+      <div class="product-detail-actions product-detail-actions-desktop">
+        <button class="primary-button full" id="productAddCart" type="button">
+          ADICIONAR AO PEDIDO
+          <span aria-hidden="true">＋</span>
+        </button>
+        <button class="outline-button full" id="productWhatsapp" type="button">
+          CONSULTAR NO WHATSAPP
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+
+      <a class="product-back-catalog" href="index.html#catalogo">← Voltar ao catálogo</a>
+    </section>
+  </main>
+
+  <div class="product-mobile-actions" id="productMobileActions" hidden>
+    <button class="outline-button" id="productWhatsappMobile" type="button">WHATSAPP</button>
+    <button class="primary-button" id="productAddCartMobile" type="button">ADICIONAR</button>
+  </div>
+
+  <section class="product-state" id="productLoading">
+    <div class="product-state-card">
+      <span class="product-state-mark">◇</span>
+      <p>Carregando produto...</p>
+    </div>
+  </section>
+
+  <section class="product-state" id="productError" hidden>
+    <div class="product-state-card">
+      <span class="product-state-mark">!</span>
+      <h1>Produto não encontrado</h1>
+      <p>Esse produto pode ter sido removido ou estar indisponível.</p>
+      <a class="primary-button" href="index.html#catalogo">VOLTAR AO CATÁLOGO</a>
+    </div>
+  </section>
+
+  <div class="cart-toast" id="productToast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="config.js"></script>
+  <script src="produto.js"></script>
+</body>
+</html>

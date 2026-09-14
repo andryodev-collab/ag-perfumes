@@ -1,0 +1,142 @@
+/* ==========================================================
+   AG PERFUMES V5.3.8 — REVISÃO FINAL DA PÁGINA DE PRODUTO
+   Somente acabamento visual. Sem alteração da lógica.
+   ========================================================== */
+
+.product-topbar {
+  padding-left: max(10px, env(safe-area-inset-left));
+  padding-right: max(10px, env(safe-area-inset-right));
+}
+
+.product-nav-button {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--shadow) 7%, transparent);
+}
+
+.product-brand {
+  max-width: 100%;
+}
+
+.product-brand strong {
+  max-width: min(46vw, 230px);
+}
+
+.product-detail-shell {
+  padding-top: 12px;
+}
+
+.product-detail-image-wrap {
+  height: min(44svh, 420px);
+  min-height: 280px;
+  aspect-ratio: auto;
+  border-radius: 20px;
+}
+
+.product-detail-image-wrap img {
+  padding: 10px;
+}
+
+.product-share {
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+}
+
+.product-share svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Só existe uma imagem real por produto no banco atual. */
+.product-image-note {
+  display: none;
+}
+
+.product-detail-info {
+  padding-top: 4px;
+}
+
+.product-meta-row {
+  margin-bottom: 10px;
+}
+
+.product-detail-info h1 {
+  margin-bottom: 7px;
+  font-size: clamp(30px, 7vw, 40px);
+  line-height: .98;
+  letter-spacing: -.025em;
+}
+
+.product-detail-price {
+  margin-bottom: 12px;
+}
+
+.product-detail-description {
+  max-width: 62ch;
+  margin-bottom: 18px;
+}
+
+.product-mobile-actions {
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+
+.product-mobile-actions button {
+  border-radius: 13px;
+}
+
+.product-mobile-actions .primary-button {
+  box-shadow: 0 7px 20px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+@media (max-width: 600px) {
+  .product-home span:last-child,
+  #productBack span:last-child {
+    display: none;
+  }
+
+  .product-topbar {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+  }
+
+  .product-brand strong {
+    max-width: 48vw;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-detail-image-wrap {
+    min-height: 250px;
+  }
+
+  .product-brand strong {
+    max-width: 44vw;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 760px) {
+  .product-detail-image-wrap {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+  }
+
+  .product-detail-info h1 {
+    font-size: clamp(40px, 4.2vw, 58px);
+  }
+
+  .product-detail-price {
+    font-size: clamp(28px, 3vw, 38px);
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .product-nav-button,
+  .product-mobile-actions .primary-button {
+    box-shadow: none;
+  }
+}

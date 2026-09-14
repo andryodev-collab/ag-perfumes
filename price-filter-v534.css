@@ -1,0 +1,194 @@
+/* ==========================================================
+   AG PERFUMES V5.3.4 — FILTRO DE PREÇO
+   Interface independente de paleta; usa apenas variáveis do tema.
+   ========================================================== */
+
+.app-price-filter {
+  margin: 6px 0 18px;
+  position: relative;
+}
+
+.app-price-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-price-toggle,
+.app-price-clear {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.app-price-toggle {
+  min-width: 0;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.app-price-toggle .price-filter-icon {
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.app-price-toggle .price-filter-summary {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.app-price-toggle[aria-expanded="true"] {
+  border-color: var(--accent);
+}
+
+.app-price-clear {
+  padding: 8px 11px;
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.app-price-clear[hidden] {
+  display: none;
+}
+
+.app-price-panel {
+  width: min(100%, 430px);
+  margin-top: 9px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 14px 36px color-mix(in srgb, var(--shadow) 18%, transparent);
+}
+
+.app-price-panel[hidden] {
+  display: none;
+}
+
+.app-price-panel-title {
+  margin: 0 0 11px;
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.app-price-presets {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 3px;
+}
+
+.app-price-presets::-webkit-scrollbar {
+  display: none;
+}
+
+.app-price-preset {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  font: inherit;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.app-price-preset.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--button-text);
+}
+
+.app-price-custom {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.app-price-field {
+  display: grid;
+  gap: 5px;
+}
+
+.app-price-field span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .4px;
+}
+
+.app-price-field input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.app-price-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.app-price-apply {
+  grid-column: 1 / -1;
+  min-height: 42px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--accent);
+  color: var(--button-text);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .7px;
+}
+
+@media (min-width: 700px) {
+  .app-price-filter {
+    margin-bottom: 20px;
+  }
+
+  .app-price-panel {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 2px);
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-price-filter * {
+    scroll-behavior: auto !important;
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .app-price-panel {
+    box-shadow: none;
+  }
+}

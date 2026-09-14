@@ -25,4 +25,27 @@
   root.style.setProperty("--line", tema.line);
   root.style.setProperty("--header-bg", tema.header);
   root.style.backgroundColor = tema.bg;
+
+  const path = location.pathname.toLowerCase();
+  const isStorefront = path.endsWith("/") || path.endsWith("/index.html");
+
+  if (isStorefront) {
+    [
+      "app-style.css",
+      "hero-v533.css",
+      "unified-filter-v536.css",
+      "storefront-polish-v537.css"
+    ].forEach(href => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      document.head.appendChild(link);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const appScript = document.createElement("script");
+      appScript.src = "app-style-safe.js";
+      document.body.appendChild(appScript);
+    }, { once: true });
+  }
 })();

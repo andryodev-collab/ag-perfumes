@@ -1,0 +1,451 @@
+/* ==========================================================
+   AG PERFUMES V5.3.7 — POLIMENTO VISUAL SEGURO
+   Somente CSS. Nenhuma alteração de lógica/filtros.
+   Mantém as cores vindas dos temas atuais.
+   ========================================================== */
+
+/* Ritmo geral da vitrine */
+body.app-v53 .catalog-section {
+  padding-top: 8px;
+}
+
+body.app-v53 .section-heading {
+  margin-bottom: 16px;
+}
+
+body.app-v53 .section-heading h2 {
+  letter-spacing: -.02em;
+}
+
+/* Busca mais próxima de interface de app */
+body.app-v53 .catalog-tools {
+  margin-bottom: 12px;
+}
+
+body.app-v53 .search-box input {
+  height: 48px;
+  border-radius: 15px;
+  padding-inline: 16px;
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 3%, transparent);
+}
+
+body.app-v53 .search-box input::placeholder {
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+}
+
+/* Categorias principais e subcategorias */
+body.app-v53 .filters {
+  gap: 7px;
+  padding-bottom: 7px;
+}
+
+body.app-v53 .filter {
+  min-height: 35px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+body.app-v53 .filter.active {
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+body.app-v53 .sub-filters {
+  margin-bottom: 12px;
+}
+
+/* ==========================================================
+   BARRA ÚNICA — FILTRAR E ORDENAR
+   ========================================================== */
+.app-filter-bar {
+  width: 100%;
+  min-height: 48px;
+  margin: 2px 0 20px;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  box-shadow: 0 7px 20px color-mix(in srgb, var(--shadow) 8%, transparent);
+}
+
+.app-filter-trigger {
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--surface2);
+  box-shadow: none;
+}
+
+.app-filter-trigger:hover,
+.app-filter-trigger:focus-visible,
+.app-filter-trigger.is-active {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface2));
+}
+
+.app-filter-trigger.is-active {
+  color: var(--accent);
+}
+
+.app-filter-icon {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.app-filter-count {
+  min-width: 19px;
+  height: 19px;
+  font-size: 8px;
+}
+
+.app-filter-summary {
+  padding-right: 9px;
+  font-size: 8.5px;
+  line-height: 1.25;
+  text-align: right;
+}
+
+/* ==========================================================
+   BOTTOM SHEET / MODAL DE FILTROS
+   ========================================================== */
+.app-filter-overlay {
+  background: color-mix(in srgb, var(--overlay) 94%, transparent);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.app-filter-sheet {
+  position: relative;
+  max-height: min(86svh, 760px);
+  border-radius: 26px 26px 0 0;
+  box-shadow: 0 -20px 52px color-mix(in srgb, var(--shadow) 30%, transparent);
+}
+
+.app-filter-sheet::before {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 8px;
+  left: 50%;
+  width: 42px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 36%, transparent);
+}
+
+.app-filter-sheet-head {
+  padding: 23px 16px 14px;
+}
+
+.app-filter-sheet-head small {
+  margin-bottom: 4px;
+  font-size: 7.5px;
+  letter-spacing: 1.8px;
+}
+
+.app-filter-sheet-head h3 {
+  font-size: 27px;
+  letter-spacing: -.02em;
+}
+
+.app-filter-close {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+  border-radius: 12px;
+  font-size: 19px;
+}
+
+.app-filter-body {
+  padding: 4px 16px 106px;
+}
+
+.app-filter-section {
+  padding: 17px 0;
+}
+
+.app-filter-section-title {
+  margin-bottom: 10px;
+  color: var(--text);
+  font-size: 9px;
+  letter-spacing: .65px;
+  text-transform: uppercase;
+}
+
+.app-filter-options {
+  gap: 8px;
+}
+
+.app-filter-option,
+.app-price-preset-unified {
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 8.5px;
+}
+
+.app-filter-option.active,
+.app-price-preset-unified.active {
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.app-filter-price-grid {
+  margin-top: 12px;
+  gap: 9px;
+}
+
+.app-filter-field input {
+  min-height: 44px;
+  border-radius: 12px;
+}
+
+.app-filter-toggle-row {
+  min-height: 50px;
+}
+
+.app-filter-toggle-copy strong {
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.app-filter-toggle-copy span {
+  line-height: 1.35;
+}
+
+.app-filter-footer {
+  padding-top: 10px;
+  gap: 9px;
+}
+
+.app-filter-reset,
+.app-filter-apply {
+  min-height: 48px;
+  border-radius: 13px;
+}
+
+.app-filter-apply {
+  box-shadow: 0 7px 20px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* ==========================================================
+   CATEGORIAS VISUAIS
+   ========================================================== */
+.app-discovery {
+  padding-bottom: 30px;
+}
+
+.app-discovery-block + .app-discovery-block {
+  margin-top: 30px;
+}
+
+.app-section-title {
+  margin-bottom: 14px;
+}
+
+.app-section-title h2 {
+  letter-spacing: -.025em;
+}
+
+.app-category-strip {
+  grid-auto-columns: minmax(96px, 25vw);
+  gap: 11px;
+}
+
+.app-category-card {
+  gap: 9px;
+}
+
+.app-category-media {
+  border-radius: 17px;
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--shadow) 8%, transparent);
+}
+
+.app-category-card strong {
+  padding-left: 2px;
+  font-size: 9.5px;
+}
+
+/* ==========================================================
+   DESTAQUES
+   ========================================================== */
+.app-feature-strip {
+  grid-auto-columns: minmax(154px, 44vw);
+  gap: 11px;
+}
+
+.app-feature-card {
+  border-radius: 19px;
+  box-shadow: 0 9px 24px color-mix(in srgb, var(--shadow) 10%, transparent);
+}
+
+.app-feature-media {
+  aspect-ratio: 1 / .92;
+}
+
+.app-feature-copy {
+  padding: 12px;
+  gap: 4px;
+}
+
+.app-feature-copy small {
+  font-size: 7.5px;
+  letter-spacing: .2px;
+}
+
+.app-feature-copy strong {
+  font-size: 17px;
+  line-height: 1.05;
+}
+
+.app-feature-copy b {
+  margin-top: 3px;
+  font-size: 12.5px;
+}
+
+/* ==========================================================
+   CARDS DO CATÁLOGO
+   ========================================================== */
+body.app-v53 .product-card {
+  border-radius: 19px;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--shadow) 9%, transparent);
+}
+
+body.app-v53 .product-card:hover {
+  transform: translateY(-1px);
+}
+
+body.app-v53 .product-info {
+  padding: 12px 11px 13px;
+}
+
+body.app-v53 .product-actions {
+  gap: 7px;
+}
+
+/* ==========================================================
+   BARRA INFERIOR MOBILE
+   ========================================================== */
+.app-bottom-nav {
+  min-height: 66px;
+  padding-top: 7px;
+  border-top-color: color-mix(in srgb, var(--accent) 16%, var(--line));
+  box-shadow: 0 -8px 26px color-mix(in srgb, var(--shadow) 11%, transparent);
+}
+
+.app-bottom-nav button,
+.app-bottom-nav a {
+  min-height: 49px;
+  border-radius: 13px;
+}
+
+.app-bottom-nav .nav-icon {
+  font-size: 17px;
+}
+
+/* ==========================================================
+   DESKTOP
+   ========================================================== */
+@media (min-width: 700px) {
+  .app-filter-bar {
+    width: fit-content;
+    min-width: 360px;
+    grid-template-columns: auto minmax(140px, 1fr);
+  }
+
+  .app-filter-summary {
+    text-align: left;
+  }
+
+  .app-filter-overlay {
+    padding: 28px;
+  }
+
+  .app-filter-sheet {
+    width: min(100%, 540px);
+    max-height: min(82vh, 720px);
+    border-radius: 24px;
+  }
+
+  .app-filter-sheet::before {
+    display: none;
+  }
+
+  .app-filter-sheet-head {
+    padding-top: 18px;
+  }
+
+  .app-category-strip {
+    gap: 13px;
+  }
+
+  .app-feature-strip {
+    gap: 14px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .app-discovery-block + .app-discovery-block {
+    margin-top: 36px;
+  }
+
+  .app-feature-card:hover,
+  .app-category-card:hover .app-category-media {
+    border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+  }
+}
+
+@media (max-width: 390px) {
+  .app-filter-bar {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .app-filter-trigger {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .app-filter-summary {
+    padding: 3px 8px 5px;
+    text-align: center;
+  }
+
+  .app-filter-options {
+    gap: 6px;
+  }
+
+  .app-filter-option,
+  .app-price-preset-unified {
+    min-height: 38px;
+    padding-inline: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.app-v53 .product-card,
+  .app-filter-trigger,
+  .app-filter-option,
+  .app-price-preset-unified {
+    transition: none !important;
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 10%, transparent)) {
+  .app-filter-bar,
+  .app-filter-trigger,
+  body.app-v53 .search-box input {
+    background: var(--surface);
+  }
+}
